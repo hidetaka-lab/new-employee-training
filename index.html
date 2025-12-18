@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新入社員育成計画・資格取得ロードマップ</title>
+    <style>
+        :root {
+            --color-primary: #208091;
+            --color-primary-hover: #1a6b7a;
+            --color-text: #134252;
+            --color-text-light: #5a6b71;
+            --color-bg: #f8fafb;
+            --color-surface: #ffffff;
+            --color-border: #d4d8db;
+            --color-accent-1: #32b8c6;
+            --color-accent-2: #e68061;
+            --color-accent-3: #f4d687;
+            --color-success: #208091;
+            --color-warning: #d9945f;
+            --color-info: #6b8fa3;
+            --font-base: 'Segoe UI', 'Helvetica Neue', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-base);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-1) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav button {
+            padding: 10px 20px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid var(--color-accent-1);
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            color: var(--color-accent-1);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+        }
+
+        .card h4 {
+            color: var(--color-text-light);
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .quarter-badge {
+            display: inline-block;
+            background: var(--color-accent-3);
+            color: var(--color-text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: var(--color-accent-1);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .milestone {
+            display: inline-block;
+            background: var(--color-success);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+            font-size: 0.9em;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-accent-1);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--color-accent-1);
+            border-radius: 50%;
+            border: 3px solid var(--color-bg);
+        }
+
+        .timeline-item strong {
+            color: var(--color-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: var(--color-primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(32, 128, 145, 0.03);
+        }
+
+        tr:hover {
+            background: rgba(32, 128, 145, 0.08);
+        }
+
+        .highlight {
+            background: rgba(244, 214, 135, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .box-outline {
+            border: 2px solid var(--color-accent-1);
+            border-radius: 6px;
+            padding: 15px;
+            background: rgba(50, 184, 198, 0.05);
+            margin: 15px 0;
+        }
+
+        .requirement {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .requirement-item {
+            background: rgba(32, 128, 145, 0.08);
+            padding: 12px;
+            border-left: 4px solid var(--color-primary);
+            border-radius: 4px;
+        }
+
+        .requirement-item strong {
+            color: var(--color-primary);
+        }
+
+        .note {
+            background: #fff8dc;
+            border-left: 4px solid var(--color-warning);
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .note::before {
+            content: '⚠ ';
+            font-weight: bold;
+        }
+
+        .success-box {
+            background: rgba(32, 128, 145, 0.1);
+            border-left: 4px solid var(--color-success);
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .success-box::before {
+            content: '✓ ';
+            font-weight: bold;
+            color: var(--color-success);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--color-text-light);
+            border-top: 1px solid var(--color-border);
+            margin-top: 50px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 128, 145, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav button {
+                width: 100%;
+            }
+
+            .requirement {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    
+    /* リンクのホバー効果 */
+    a:hover {
+        color: #0052a3;
+        text-decoration: underline;
+    }
+
+    /* 外部リンクアイコン（オプション） */
+    a[target="_blank"]::after {
+        content: " ↗";
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 新入社員育成計画</h1>
+            <p>計装技術営業人材育成・1級電気工事施工管理技士・監理技術者資格取得ロードマップ</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-section="overview">📋 概要</button>
+            <button class="nav-btn" data-section="year1">📅 1年目計画</button>
+            <button class="nav-btn" data-section="year2">📅 2年目計画</button>
+            <button class="nav-btn" data-section="qualifications">🏆 資格取得ロードマップ</button>
+            <button class="nav-btn" data-section="timeline">📈 全体スケジュール</button>
+            <button class="nav-btn" data-section="team">👥 複数名育成計画</button>
+        </nav>
+
+        <!-- 概要セクション -->
+        <section id="overview" class="section active">
+            <div class="card">
+                <h2>📋 育成計画の全体像</h2>
+                <h3>会社の工事計画</h3>
+                <ul>
+                    <li><strong>2025年度〜2030年3月</strong>: 公共電気工事・機械器具設置工事が年間10件ペースで重複進行</li>
+                    <li><strong>2030年4月以降</strong>: 継続的に年間10件の工事を請負</li>
+                </ul>
+
+                <h3>育成目標</h3>
+                <ul>
+                    <li>現場技術者としての基礎知識と実務スキルを習得</li>
+                    <li>計装機器・信号・制御システム・図面の専門知識を修得</li>
+                    <li><span class="highlight">1級電気工事施工管理技士</span>資格を取得</li>
+                    <li><span class="highlight">監理技術者資格者証</span>を取得し、大規模工事の監理に従事</li>
+                    <li>2年目から営業実践力を育成し、技術営業人材を育成</li>
+                </ul>
+
+                <div class="box-outline">
+                    <strong>🎯 最終目標</strong>
+                    <p>2030年以降、年間10件以上の工事を安定的に受注・施工できる人材基盤の構築</p>
+                </div>
+
+                <h3>育成スケジュール</h3>
+                <table>
+                    <tr>
+                        <th>フェーズ</th>
+                        <th>期間</th>
+                        <th>主要目標</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1年目：現場技術力養成期</strong></td>
+                        <td>入社〜12ヶ月</td>
+                        <td>現場実務を通じた基礎技術修得、現場理解</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2年目：営業実践力育成期</strong></td>
+                        <td>13〜24ヶ月</td>
+                        <td>営業実務、提案スキル、独立営業活動</td>
+                    </tr>
+                    <tr>
+                        <td><strong>並行：1級資格取得</strong></td>
+                        <td>入社3年目〜8年目</td>
+                        <td>第一次検定→第二次検定→監理技術者証取得</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- 1年目セクション -->
+        <section id="year1" class="section">
+            <div class="card">
+                <h2>📅 1年目：現場技術力養成期（入社〜12ヶ月）</h2>
+
+                <div class="quarter-badge">第1クォーター（1〜3ヶ月）</div>
+                <h3>基礎教育と現場導入</h3>
+
+                <h4>1-1. 社会人・建設業界の基礎（集合研修）</h4>
+                <ul>
+                    <li>ビジネスマナー（挨拶、名刺交換、電話・メール、訪問時マナー）</li>
+                    <li>報連相の基本とコミュニケーション技術</li>
+                    <li>建設業界・計装業界の商習慣と元請・下請の関係</li>
+                    <li>安全衛生教育（KYT、現場入場の心得、保護具の扱い）</li>
+                    <li>コンプライアンス・情報セキュリティ・ハラスメント防止</li>
+                </ul>
+
+                <h4>1-2. 計装機器・信号の基礎（座学＋簡易実習）</h4>
+                <ul>
+                    <li>計装とは何か（「測る」「伝える」「制御する」の基本概念）</li>
+                    <li>温度・圧力・流量・レベルなど主要プロセス量の測定原理</li>
+                    <li>工業計器の構成要素（検出部・変換部・調節部・操作部）</li>
+                    <li><a href="keiso-signal-guide.html#analog-signals" target="_blank" style="color: #0066cc; text-decoration: none; border-bottom: 1px dotted #0066cc;">アナログ信号 4–20mA の意味と特長、0–10V などとの違い</a></li>
+                    <li>デジタル／フィールドバス／シリアル通信の概要（HART、Modbus 等）</li>
+                </ul>
+
+                <h4>1-3. 計装工事と建設業の基本理解</h4>
+                <ul>
+                    <li>計装工事の流れ（設計 → 施工 → 試運転 → 引き渡し）</li>
+                    <li>配管工事・電気工事・ケーブリング・端末処理の概要</li>
+                    <li>建設業法の概要と工事請負の基本</li>
+                    <li>現場組織（現場所長、監督、職長、職人、協力会社）の役割</li>
+                    <li>現場ルール・危険予知・ヒヤリハットの共有方法</li>
+                </ul>
+
+                <h4>1-4. 初期現場研修（先輩同行）</h4>
+                <ul>
+                    <li>現場見学（浄水場・工場・プラントなど複数種）</li>
+                    <li>安全装備の使い方（ヘルメット、安全帯、安全靴、保護具）</li>
+                    <li>写真撮影・メモ取り・簡易スケッチなど記録の取り方</li>
+                    <li>協力会社・施主・監理者とのコミュニケーションの実際</li>
+                </ul>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid var(--color-border);">
+
+                <div class="quarter-badge">第2クォーター（4〜6ヶ月）</div>
+                <h3>現場実務とシステム理解</h3>
+
+                <h4>2-1. 現場配属（OJT 中心）</h4>
+                <ul>
+                    <li>計装工事の施工補助（配線・ケーブルラック・ダクト等）</li>
+                    <li>機器据付補助（センサー、トランスミッタ、操作端、盤内機器）</li>
+                    <li>試運転・調整作業への立会いと観察</li>
+                    <li>工程表の見方・進捗管理の基礎</li>
+                    <li>安全パトロール・ツールボックスミーティングへの参加</li>
+                </ul>
+
+                <h4>2-2. 制御・監視システムの基礎（座学＋現場）</h4>
+                <ul>
+                    <li>制御ループの構成（センサー → 変換器 → コントローラ → バルブ）</li>
+                    <li>フィードバック制御／PID 制御の超入門</li>
+                    <li>連続制御とシーケンス制御の違い</li>
+                    <li>DCS・PLC・SCADA の役割と違い</li>
+                    <li>横河DCS（CENTUM など）の歴史と役割、代表的画面・機能</li>
+                </ul>
+
+                <h4>2-3. 通信・信号伝送の理解</h4>
+                <ul>
+                    <li>アナログ信号 vs デジタル信号</li>
+                    <li>長距離伝送・ノイズ対策・シールド・接地</li>
+                    <li>フィールドネットワークの概要（Foundation Fieldbus、Profibus など）</li>
+                    <li>IoT・リモート監視の基礎（クラウド・VPN・産業用ルータの概念）</li>
+                </ul>
+
+                <h4>2-4. 図面読解の入門</h4>
+                <ul>
+                    <li>P&ID（計装フロー図）の基本記号・タグの読み方</li>
+                    <li>電気配線図・単線結線図・複線結線図の違い</li>
+                    <li>盤内配線図・端子台図の構造</li>
+                    <li>施工図・竣工図・As-Built の意味</li>
+                    <li>実プロジェクト図面を用いた演習（トレース・ライン追い）</li>
+                </ul>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid var(--color-border);">
+
+                <div class="quarter-badge">第3クォーター（7〜9ヶ月）</div>
+                <h3>浄水場・プラント現場への深掘り</h3>
+
+                <h4>3-1. 浄水場の構成と計装</h4>
+                <ul>
+                    <li>浄水プロセスの流れ（取水 → 着水井 → 沈殿 → ろ過 → 消毒 → 配水）</li>
+                    <li>各工程で使用される計装機器（流量計、水質計、レベル計、圧力計など）</li>
+                    <li>浄水場の監視制御構成（中央監視室、現場盤、フィールド機器）</li>
+                    <li>公共インフラとしての信頼性要求・24時間運転の考え方</li>
+                    <li>点検・保守・更新のサイクルと予算の考え方</li>
+                </ul>
+
+                <h4>3-2. 製造業プラントの構成理解</h4>
+                <ul>
+                    <li>プロセスプラントと離散系製造の違い</li>
+                    <li>化学・食品・半導体等、業種ごとの特徴と計装のポイント</li>
+                    <li>バッチ制御と連続制御の概要</li>
+                    <li>防爆エリアの概念と防爆機器・防爆施工の基礎</li>
+                    <li>プロセスフロー図（PFD）と P&ID の関係付け演習</li>
+                </ul>
+
+                <h4>3-3. 保守・点検業務のOJT</h4>
+                <ul>
+                    <li>定期点検の流れとチェックリストの見方</li>
+                    <li>校正業務（圧力計・流量計・温度計など）の基礎</li>
+                    <li>故障症状からの原因切り分け（配線／機器／設定／プロセス）</li>
+                    <li>点検・修理結果の報告書作成と顧客説明の経験</li>
+                </ul>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid var(--color-border);">
+
+                <div class="quarter-badge">第4クォーター（10〜12ヶ月）</div>
+                <h3>応用力と営業準備</h3>
+
+                <h4>4-1. 複数現場ローテーション</h4>
+                <ul>
+                    <li>新設工事・更新工事・メンテナンス案件の違いを体験</li>
+                    <li>小規模案件でのサブ担当（先輩監督のサポートのもと）</li>
+                    <li>設計変更・仕様変更の現場対応を経験</li>
+                    <li>協力会社への指示出し・手配の一部を担当</li>
+                </ul>
+
+                <h4>4-2. 技術提案の基礎（営業準備）</h4>
+                <ul>
+                    <li>顧客ヒアリング同行（課題・要望・運転条件の聞き出し）</li>
+                    <li>機器選定のロジック（仕様書・周囲条件・コストバランス）</li>
+                    <li>見積構成の理解（機器費・工事費・諸経費・予備品など）</li>
+                    <li>競合製品比較の視点（性能・価格・保守性・信頼性）</li>
+                </ul>
+
+                <h4>4-3. 資格取得・社内試験</h4>
+                <ul>
+                    <li>第二種電気工事士 等の資格取得支援</li>
+                    <li>計装士・関連資格に向けた基礎学習</li>
+                    <li>社内技術試験・レポートによる理解度確認</li>
+                </ul>
+
+                <h4>4-4. 1年目総括と2年目営業移行準備</h4>
+                <ul>
+                    <li>「1年間で学んだこと」レポート作成（現場写真・図面を交えた振り返り）</li>
+                    <li>得意分野・強化したい分野の自己分析</li>
+                    <li>営業部門との合同ワークショップ（案件事例共有）</li>
+                    <li>2年目の個人目標設定（売上／訪問件数／担当顧客など）</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2年目セクション -->
+        <section id="year2" class="section">
+            <div class="card">
+                <h2>📅 2年目：営業実践力育成期（13〜24ヶ月）</h2>
+
+                <h3>前期（13〜18ヶ月）：営業基礎と提案活動</h3>
+
+                <h4>2-1. 営業基礎スキル研修</h4>
+                <ul>
+                    <li>営業の役割とKPI（売上・利益・案件数・粗利など）</li>
+                    <li>アポイントの取り方・訪問前準備</li>
+                    <li>ヒアリングスキル（現場課題・予算・決裁プロセスの把握）</li>
+                    <li>提案の組み立て方（現場経験を活かした説得力あるストーリー）</li>
+                </ul>
+
+                <h4>2-2. 先輩営業同行フェーズ</h4>
+                <ul>
+                    <li>既存顧客への定期訪問同行</li>
+                    <li>新規引合いの打合せ参加</li>
+                    <li>提案書・見積書作成の実務（ドラフト→先輩レビュー）</li>
+                    <li>現場調査〜提案〜見積〜受注までの一連の流れを体感</li>
+                </ul>
+
+                <h4>2-3. 案件管理・社内調整</h4>
+                <ul>
+                    <li>案件管理表／SFA ツールの使い方（あれば）</li>
+                    <li>技術部門・工事部門への情報共有・見積依頼の出し方</li>
+                    <li>納期・コストの調整とリスクの見える化</li>
+                    <li>顧客クレーム・トラブル対応の同席と学習</li>
+                </ul>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid var(--color-border);">
+
+                <h3>後期（19〜24ヶ月）：独立営業と専門性強化</h3>
+
+                <h4>2-4. 担当顧客の割当と独り立ち</h4>
+                <ul>
+                    <li>担当エリアまたは担当顧客の正式アサイン</li>
+                    <li>小〜中規模案件の単独対応（ただしレビューは先輩・上長）</li>
+                    <li>年間訪問計画の作成と実行</li>
+                    <li>既存設備の更新提案・改善提案の立案</li>
+                </ul>
+
+                <h4>2-5. 技術営業としての専門性強化</h4>
+                <ul>
+                    <li>メーカー技術講習・新製品勉強会への積極参加</li>
+                    <li>自社取扱製品の強み・競合優位性の整理</li>
+                    <li>業界別ソリューション（浄水場・下水・一般産業・半導体など）の深耕</li>
+                    <li>価格戦略・入札案件の基礎知識（公共／民間）</li>
+                </ul>
+
+                <h4>2-6. 成果振り返りと3年目以降のキャリア設計</h4>
+                <ul>
+                    <li>受注案件・失注案件の振り返りと要因分析</li>
+                    <li>自身の強み・営業スタイルの言語化</li>
+                    <li>3年目以降（キーユーザー担当／新規開拓／プロジェクト営業など）の方向性検討</li>
+                    <li>上長とのキャリア面談・中期目標設定</li>
+                </ul>
+            </div>
+        </section>
+
+       <!-- 資格取得ロードマップセクション -->
+        <section id="qualifications" class="section">
+            <div class="card">
+                <h2>🏆 1級電気工事施工管理技士・監理技術者 資格取得ロードマップ</h2>
+
+                <h3>資格取得の必要性</h3>
+                <ul>
+                    <li>請負金額<span class="highlight">4,500万円以上</span>の工事では、監理技術者の配置が義務</li>
+                    <li>監理技術者になるには、<span class="highlight">1級電気工事施工管理技士</span>などの1級国家資格が必須</li>
+                    <li>年間10件の工事を継続受注するには、複数名の監理技術者が必要</li>
+                </ul>
+
+                <h3>現行制度（重要）</h3>
+
+                <h4>1級電気工事施工管理技士 第一次検定</h4>
+                <div class="success-box">
+                    <strong>年齢要件のみ：19歳以上（試験実施年度末時点）</strong>
+                    <p>学歴・実務経験は不問。電機学科大学卒なら、入社2年目（2028年度）の受験も可能</p>
+                </div>
+
+                <h4>1級電気工事施工管理技士 第二次検定（第一次検定合格後）</h4>
+                <p>以下のいずれかの実務経験が必要：</p>
+                <div class="requirement">
+                    <div class="requirement-item">
+                        <strong>通常の実務経験</strong><br>
+                        5年以上
+                    </div>
+                    <div class="requirement-item">
+                        <strong>特定実務経験を含む</strong><br>
+                        特定1年以上 + 通常2年以上 = 計3年以上
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>特定実務経験とは：</strong> 請負金額4,500万円以上の工事で、監理技術者・主任技術者の指導下または自ら主任技術者として従事した経験
+                </div>
+
+                <h4>監理技術者資格者証 取得要件 ⚡ <span class="highlight">重要：追加実務経験不要</span></h4>
+                <div class="box-outline">
+                    <strong>1級電気工事施工管理技士合格後：</strong><br>
+                    <ul>
+                        <li><strong>監理技術者講習を受講するだけで取得可能</strong></li>
+                        <li>追加の実務経験は不要（現行制度）</li>
+                        <li>講習受講から資格者証取得まで約1〜2ヶ月</li>
+                    </ul>
+                </div>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid var(--color-border);">
+
+                <h3>新卒メンバーの最短ロードマップ（電機学科大学卒・入社5年目で監理技術者配置可能）</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>2026年4月（入社1年目）</strong><br>
+                        実務経験スタート。現場配属で電気工事・計装工事の施工管理補助。工程管理、品質管理、安全管理の実務を経験。実務経験証明書用の記録開始。大学で学んだ電気工学・制御理論の基礎知識を現場で即座に活かせる。
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2027年度（入社2年目）</strong><br>
+                        実務経験継続＋第一次検定準備開始。現場で施工管理実務を深掘り。1級第一次検定の過去問演習・参考書学習開始。電機学科の基礎知識が大きなアドバンテージ。
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2028年度（入社3年目）✅ 1級第一次検定 受験・合格</strong><br>
+                        2028年6月：第一次検定受験<br>
+                        2029年1月：合格発表<br>
+                        「技士補」として名乗ることが可能
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2028年度〜2030年度（入社3〜5年目）✅ 特定実務経験を積む</strong><br>
+                        請負金額4,500万円以上の公共電気工事・機械器具設置工事に配置。監理技術者または主任技術者の指導下で施工管理を担当。工事台帳、実務経験証明書の記録を確実に保管。特定実務経験1年以上＋通常実務2年以上＝計3年以上を達成。
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2030年度（入社5年目）✅ 1級第二次検定 受験・合格</strong><br>
+                        2030年7月：第二次検定申込（3年の実務経験要件を満たす）<br>
+                        ⚠️ 重要：受験資格には特定実務経験1年以上が必須<br>
+                        2030年10月：第二次検定受験（記述式・経験記述）<br>
+                        2031年1月：合格発表<br>
+                        🎓 <strong>1級電気工事施工管理技士 取得</strong>
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2031年1月〜2月（入社5年目）✅ 監理技術者講習受講</strong><br>
+                        1級合格直後、監理技術者講習を受講。講習受講から約1〜2ヶ月で修了。
+                    </div>
+
+                    <div class="timeline-item">
+                        <strong>2031年2月〜3月（入社5年目）✅ 監理技術者資格者証 取得</strong><br>
+                        🏆 <strong>監理技術者資格者証 取得完了（追加実務経験不要）</strong><br>
+                        請負金額4,500万円以上の大規模工事で監理技術者として配置可能<br>
+                        ✨ <strong>電機学科大学卒により、新卒入社から5年で監理技術者へ達成</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 全体スケジュールセクション -->
+        <section id="timeline" class="section">
+            <div class="card">
+                <h2>📈 全体スケジュール：受験スケジュールと試験年度</h2>
+
+                <h3>毎年度の試験スケジュール（令和7年度以降）</h3>
+                <table>
+                    <tr>
+                        <th>時期</th>
+                        <th>イベント</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>3月</td>
+                        <td>第一次検定 申込</td>
+                        <td>受験申込開始</td>
+                    </tr>
+                    <tr>
+                        <td>6月上旬</td>
+                        <td>第一次検定 実施</td>
+                        <td>マークシート方式（4肢択一）</td>
+                    </tr>
+                    <tr>
+                        <td>7月</td>
+                        <td>第二次検定 申込</td>
+                        <td>第一次合格者のみ（実務経験要件満たす者）</td>
+                    </tr>
+                    <tr>
+                        <td>10月中旬</td>
+                        <td>第二次検定 実施</td>
+                        <td>記述式・経験記述</td>
+                    </tr>
+                    <tr>
+                        <td>翌年1〜2月</td>
+                        <td>合格発表</td>
+                        <td>試験機関より公式発表</td>
+                    </tr>
+                </table>
+
+                <h3>新卒メンバーの受験・取得スケジュール（電機学科大学卒）</h3>
+                <table>
+                    <tr>
+                        <th>入社年度</th>
+                        <th>第一次検定</th>
+                        <th>第二次検定</th>
+                        <th>1級合格</th>
+                        <th>監理技術者証</th>
+                        <th>配置開始</th>
+                    </tr>
+                    <tr>
+                        <td><strong>2026年4月入社</strong></td>
+                        <td>2028年6月受験<br>2029年1月合格</td>
+                        <td>2030年7月申込<br>2031年1月合格</td>
+                        <td>2031年1月</td>
+                        <td><strong>2031年3月</strong></td>
+                        <td><strong>2031年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2027年4月入社</strong></td>
+                        <td>2029年6月受験<br>2030年1月合格</td>
+                        <td>2031年7月申込<br>2032年1月合格</td>
+                        <td>2032年1月</td>
+                        <td><strong>2032年3月</strong></td>
+                        <td><strong>2032年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2028年4月入社</strong></td>
+                        <td>2030年6月受験<br>2031年1月合格</td>
+                        <td>2032年7月申込<br>2033年1月合格</td>
+                        <td>2033年1月</td>
+                        <td><strong>2033年3月</strong></td>
+                        <td><strong>2033年4月</strong></td>
+                    </tr>
+                </table>
+
+                <h3>監理技術者資格者証取得・配置スケジュール（電機学科大学卒・追加実務経験不要）</h3>
+                <table>
+                    <tr>
+                        <th>社員</th>
+                        <th>1級合格</th>
+                        <th>監理技術者講習</th>
+                        <th>監理技術者証取得</th>
+                        <th>配置開始</th>
+                    </tr>
+                    <tr>
+                        <td><strong>A氏（2026年入社）</strong></td>
+                        <td>2031年1月</td>
+                        <td>2031年1月〜2月</td>
+                        <td><span class="highlight">2031年3月</span></td>
+                        <td><span class="highlight">2031年4月</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>B氏（2027年入社）</strong></td>
+                        <td>2032年1月</td>
+                        <td>2032年1月〜2月</td>
+                        <td><span class="highlight">2032年3月</span></td>
+                        <td><span class="highlight">2032年4月</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>C氏（2028年入社）</strong></td>
+                        <td>2033年1月</td>
+                        <td>2033年1月〜2月</td>
+                        <td><span class="highlight">2033年3月</span></td>
+                        <td><span class="highlight">2033年4月</span></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- 複数名育成計画セクション -->
+        <section id="team" class="section">
+            <div class="card">
+                <h2>👥 複数名育成計画：年間10件工事を安定的に受注・施工するために</h2>
+
+                <h3>必要な監理技術者数</h3>
+                <div class="box-outline">
+                    <strong>🔴 重要：大型公共工事の工期が2〜3年の場合</strong><br><br>
+                    <strong>年間10件新規受注 × 工期2〜3年 = 同時進行20〜30件</strong><br><br>
+                    <strong>必要な監理技術者数：10〜15名</strong><br><br>
+                    理由：
+                    <ul>
+                        <li>監理技術者は請負金額4,500万円以上の工事に<span class="highlight">専任配置</span>が必須</li>
+                        <li>1名の監理技術者は同時に1件の工事にのみ専任配置可能</li>
+                        <li>定常状態では常時10〜15件の大規模工事が並行進行</li>
+                        <li>年間10件受注なら、毎年10件が2〜3年工期で継続</li>
+                        <li>結果として必要監理技術者数は<span class="highlight">10〜15名</span></li>
+                    </ul>
+                </div>
+
+                <h3>段階的人材育成スケジュール（10〜15名体制へ向けた計画）</h3>
+                <p>2026年から毎年3〜4名の電機学科大学卒新入社員を採用し、段階的に監理技術者を育成。追加実務経験不要により、1級二次合格後すぐに監理技術者として配置可能：</p>
+                <table>
+                    <tr>
+                        <th>グループ</th>
+                        <th>社員数</th>
+                        <th>入社年</th>
+                        <th>1級一次検定</th>
+                        <th>1級二次検定</th>
+                        <th>監理技術者証取得</th>
+                        <th>配置開始</th>
+                    </tr>
+                    <tr>
+                        <td><strong>第1期A</strong></td>
+                        <td>2名</td>
+                        <td>2026年4月</td>
+                        <td>2028年6月受験<br>2029年1月合格</td>
+                        <td>2030年7月申込<br>2031年1月合格</td>
+                        <td><strong>2031年3月</strong></td>
+                        <td><strong>2031年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第1期B</strong></td>
+                        <td>2名</td>
+                        <td>2027年4月</td>
+                        <td>2029年6月受験<br>2030年1月合格</td>
+                        <td>2031年7月申込<br>2032年1月合格</td>
+                        <td><strong>2032年3月</strong></td>
+                        <td><strong>2032年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第2期C</strong></td>
+                        <td>2名</td>
+                        <td>2028年4月</td>
+                        <td>2030年6月受験<br>2031年1月合格</td>
+                        <td>2032年7月申込<br>2033年1月合格</td>
+                        <td><strong>2033年3月</strong></td>
+                        <td><strong>2033年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第2期D</strong></td>
+                        <td>2名</td>
+                        <td>2029年4月</td>
+                        <td>2031年6月受験<br>2032年1月合格</td>
+                        <td>2033年7月申込<br>2034年1月合格</td>
+                        <td><strong>2034年3月</strong></td>
+                        <td><strong>2034年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第3期E</strong></td>
+                        <td>2名</td>
+                        <td>2030年4月</td>
+                        <td>2032年6月受験<br>2033年1月合格</td>
+                        <td>2034年7月申込<br>2035年1月合格</td>
+                        <td><strong>2035年3月</strong></td>
+                        <td><strong>2035年4月</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>第3期F</strong></td>
+                        <td>2名</td>
+                        <td>2031年4月</td>
+                        <td>2033年6月受験<br>2034年1月合格</td>
+                        <td>2035年7月申込<br>2036年1月合格</td>
+                        <td><strong>2036年3月</strong></td>
+                        <td><strong>2036年4月</strong></td>
+                    </tr>
+                </table>
+
+                <h3>育成スケジュール概要（追加実務経験不要による短縮）</h3>
+                <div class="success-box">
+                    <ul>
+                        <li><strong>2031年4月</strong>：第1期A（2名）が監理技術者として配置開始</li>
+                        <li><strong>2032年4月</strong>：計4名の監理技術者が稼働</li>
+                        <li><strong>2033年4月</strong>：計6名の監理技術者が稼働</li>
+                        <li><strong>2034年4月</strong>：計8名の監理技術者が稼働</li>
+                        <li><strong>2035年4月</strong>：計10名の監理技術者が稼働 ✅ <strong>年間10件大規模工事対応体制確立</strong></li>
+                        <li><strong>2036年4月</strong>：計12名の監理技術者が稼働（最適化完成）</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 最終成果</h3>
+                <div class="box-outline">
+                    <ul>
+                        <li><strong>2031年4月</strong>：最初の監理技術者2名が配置開始</li>
+                        <li><strong>2032年4月</strong>：監理技術者4名体制で年間4件の大規模工事に対応</li>
+                        <li><strong>2033年4月</strong>：監理技術者6名体制で年間6件の大規模工事に対応</li>
+                        <li><strong>2034年4月</strong>：監理技術者8名体制で年間8件の大規模工事に対応</li>
+                        <li><strong>2035年4月</strong>：監理技術者10名体制で年間10件の大規模工事を完全自社完結 ✅</li>
+                        <li><strong>2036年4月以降</strong>：外部監理技術者への依存が完全に解消。安定的・継続的な大規模公共工事受注体制が確立。競争力と利益性が大幅に向上。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>実務経験証明書作成の重要ポイント</h2>
+
+                <h3>記録必須項目</h3>
+                <ul>
+                    <li>工事名称・場所・請負金額（特定実務経験の場合は4,500万円以上を明記）</li>
+                    <li>従事期間（年月日単位で正確に）</li>
+                    <li>従事した立場（施工管理、設計監理、施工監督）</li>
+                    <li>指導監督者の氏名・資格（特定実務経験の場合必須）</li>
+                    <li>工事内容詳細（電気工事、機械器具設置工事、計装工事の具体的内容）</li>
+                </ul>
+
+                <h3>実務経験として認められる業務</h3>
+                <ul>
+                    <li>電気工事・機械器具設置工事の施工管理（工程・品質・安全・原価）</li>
+                    <li>計装機器の据付、配線、試運転、調整作業の管理</li>
+                    <li>設計監理、施工監督（発注者側技術者として）</li>
+                </ul>
+
+                <h3>認められない業務</h3>
+                <ul>
+                    <li>保守点検・定期メンテナンスのみの業務</li>
+                    <li>営業・事務作業のみ</li>
+                    <li>資材調達のみ</li>
+                </ul>
+
+                <div class="note">
+                    <strong>実務経験の記録は資格試験の合否を分ける最重要項目です。工事台帳・従事証明書を確実に保管してください。</strong>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <h3>補足：教育プログラム運営のポイント</h3>
+            <ul>
+                <li>各フェーズごとに「到達目標」と「評価方法（テスト・レポート・OJT評価）」を明確化</li>
+                <li>実際の図面・写真・トラブル事例・見積など、生の資料を教材として活用</li>
+                <li>現場サイドと営業サイドの両方から講師を立て、視点の違いを学ばせる</li>
+                <li>1年目終わり・2年目終わりで総括プレゼンをさせ、理解度と発信力をチェック</li>
+                <li>実務経験証明書の記録は資格試験合否の要。工事台帳を確実に保管する</li>
+            </ul>
+            <p style="margin-top: 30px; font-style: italic;">このロードマップに基づいて計画的に育成することで、2035年には競争力のある社内人材基盤が確立されます。</p>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sectionId = this.dataset.section;
+                
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+                
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
+

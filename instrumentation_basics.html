@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>計装とは何か - 新入社員向け技術説明資料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .date-info {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        main {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 30px;
+            background: #764ba2;
+            margin-right: 15px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 20px;
+            padding-left: 20px;
+            border-left: 4px solid #764ba2;
+        }
+        
+        .concept-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .concept-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .concept-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .concept-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .concept-description {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .equipment-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .equipment-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .equipment-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-top: 15px;
+            line-height: 2;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(90deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+        
+        .process-step {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #667eea;
+        }
+        
+        .process-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .signal-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .signal-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .signal-abbr {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .signal-full {
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        
+        .company-info {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .concept-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .process-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                bottom: -20px;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .signal-types {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="date-info">作成日: 2025年12月24日</div>
+            <h1>計装とは何か</h1>
+            <p class="subtitle">「測る」「伝える」「制御する」の基本概念</p>
+            <p class="subtitle">〜 新入社員向け技術説明資料 〜</p>
+        </header>
+        
+        <main>
+            <section class="section">
+                <h2>1. 計装（Instrumentation）の定義</h2>
+                
+                <div class="info-box">
+                    <p><strong>計装とは：</strong>プラントや設備の運転状態を<span class="highlight">測定</span>し、その情報を<span class="highlight">伝送</span>して、最適な状態に<span class="highlight">制御</span>するための技術体系です。</p>
+                    <p>英語の「Instrumentation」は「計器を装備すること」を意味し、日本では「計測」と「装置」を組み合わせて「計装」と呼ばれています。</p>
+                </div>
+                
+                <p>上下水道施設や製造プラントにおいて、計装は設備の<strong>「目」「神経」「頭脳」</strong>として機能し、安全で効率的な運転を実現する重要な役割を担っています。</p>
+            </section>
+            
+            <section class="section">
+                <h2>2. 計装の3つの基本概念</h2>
+                
+                <div class="concept-cards">
+                    <div class="concept-card">
+                        <div class="concept-icon">📊</div>
+                        <div class="concept-title">測る（Measure）</div>
+                        <div class="concept-description">
+                            温度、圧力、流量、液位などのプロセス変数を正確に測定し、数値化します。現場の状態を把握するための第一歩です。
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-icon">📡</div>
+                        <div class="concept-title">伝える（Transmit）</div>
+                        <div class="concept-description">
+                            測定したデータを電気信号（4-20mA、1-5V等）やデジタル通信で制御室まで伝送します。情報の橋渡し役です。
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-icon">⚙️</div>
+                        <div class="concept-title">制御する（Control）</div>
+                        <div class="concept-description">
+                            収集したデータを基に、バルブやポンプなどの機器を自動制御し、プロセスを最適な状態に保ちます。
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>3. 計装の具体的な流れ</h2>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <div><strong>現場計器</strong></div>
+                        <div>センサーで測定</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <div><strong>信号変換</strong></div>
+                        <div>電気信号に変換</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <div><strong>伝送</strong></div>
+                        <div>制御盤へ送信</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">4</div>
+                        <div><strong>処理</strong></div>
+                        <div>PLC/DCSで演算</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">5</div>
+                        <div><strong>制御出力</strong></div>
+                        <div>機器を操作</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>4. 主要な計装機器</h2>
+                
+                <h3>4.1 測定機器（センサー・発信器）</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <div class="equipment-name">圧力計・圧力発信器</div>
+                        <div>配管内の圧力を測定。ポンプの吐出圧力監視などに使用。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">流量計</div>
+                        <div>電磁式、超音波式など。上水の配水量や薬品注入量の測定。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">液位計</div>
+                        <div>タンクや池の水位測定。投込式、超音波式、レーダー式など。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">温度計</div>
+                        <div>測温抵抗体（Pt100）、熱電対など。プロセス温度の監視。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">水質計器</div>
+                        <div>pH計、濁度計、残留塩素計など。水質管理に必須。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">分析計</div>
+                        <div>溶存酸素計、導電率計など。プロセス管理用。</div>
+                    </div>
+                </div>
+                
+                <h3>4.2 制御機器</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <div class="equipment-name">PLC（プログラマブルロジックコントローラ）</div>
+                        <div>シーケンス制御の中核。入出力信号を処理し、機器を自動制御。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">DCS（分散制御システム）</div>
+                        <div>大規模プラント向け。高度なプロセス制御を実現。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">調節計</div>
+                        <div>PID制御などで目標値に自動調整。流量や圧力の制御に使用。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">SCADA</div>
+                        <div>監視制御システム。広域の設備を中央監視室から一元管理。</div>
+                    </div>
+                </div>
+                
+                <h3>4.3 操作端（アクチュエータ）</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <div class="equipment-name">電動弁・空気作動弁</div>
+                        <div>流量調整や開閉制御。制御信号により自動操作。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">インバータ</div>
+                        <div>ポンプやファンの回転数制御。省エネ運転を実現。</div>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="equipment-name">電磁弁</div>
+                        <div>小口径配管の開閉制御。薬品注入ラインなどで使用。</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>5. 信号の種類（I/O）</h2>
+                
+                <div class="signal-types">
+                    <div class="signal-card">
+                        <div class="signal-abbr">AI</div>
+                        <div class="signal-full">Analog Input</div>
+                        <div>アナログ入力信号<br>4-20mA、1-5V<br>例：流量、圧力、温度</div>
+                    </div>
+                    <div class="signal-card">
+                        <div class="signal-abbr">AO</div>
+                        <div class="signal-full">Analog Output</div>
+                        <div>アナログ出力信号<br>4-20mA、1-5V<br>例：バルブ開度指令</div>
+                    </div>
+                    <div class="signal-card">
+                        <div class="signal-abbr">DI</div>
+                        <div class="signal-full">Digital Input</div>
+                        <div>デジタル入力信号<br>ON/OFF、開/閉<br>例：運転/停止状態</div>
+                    </div>
+                    <div class="signal-card">
+                        <div class="signal-abbr">DO</div>
+                        <div class="signal-full">Digital Output</div>
+                        <div>デジタル出力信号<br>ON/OFF指令<br>例：ポンプ起動/停止</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <strong>標準信号について：</strong>
+                    <ul>
+                        <li><strong>4-20mA：</strong>工業標準の電流信号。ノイズに強く長距離伝送が可能</li>
+                        <li><strong>1-5V：</strong>電圧信号。PLCの入力カードで直接受信可能</li>
+                        <li><strong>接点信号：</strong>無電圧接点（ドライ接点）または有電圧接点</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>6. 計装工事の実務</h2>
+                
+                <h3>6.1 計装工事の流れ</h3>
+                <ul>
+                    <li><strong>設計段階：</strong>P&ID（配管計装図）の作成、計装品の選定、制御ロジック設計</li>
+                    <li><strong>施工段階：</strong>計器取付、配線工事、盤製作・設置、ケーブル敷設</li>
+                    <li><strong>試験段階：</strong>ループチェック、模擬信号試験、インターロック試験</li>
+                    <li><strong>試運転段階：</strong>実液試験、制御調整（PIDチューニング）、総合動作確認</li>
+                </ul>
+                
+                <h3>6.2 ループチェックとは</h3>
+                <div class="example-box">
+                    <strong>ループチェック：</strong>計装ループ（センサー → 伝送器 → PLC → 操作端）の一連の動作を確認する重要な試験です。
+                    <ul>
+                        <li>模擬信号を入力し、正しく伝送・表示されるか確認</li>
+                        <li>制御出力が正しく動作するか確認</li>
+                        <li>警報設定値で適切に警報が発報するか確認</li>
+                    </ul>
+                </div>
+                
+                <h3>6.3 計装盤の種類</h3>
+                <ul>
+                    <li><strong>現場操作盤：</strong>現場での機器操作用。防水・防塵構造</li>
+                    <li><strong>中継端子盤：</strong>現場信号の中継・分岐用</li>
+                    <li><strong>動力制御盤：</strong>ポンプ等の動力機器制御用</li>
+                    <li><strong>計装盤：</strong>PLC収納、信号処理用</li>
+                    <li><strong>監視操作盤：</strong>中央監視室での監視・操作用</li>
+                </ul>
+            </section>
+            
+            <section class="section">
+                <h2>7. 上下水道施設での計装の役割</h2>
+                
+                <h3>7.1 浄水場での計装</h3>
+                <ul>
+                    <li><strong>取水施設：</strong>河川水位監視、取水ゲート制御</li>
+                    <li><strong>凝集沈殿：</strong>濁度測定、薬品注入制御、攪拌機制御</li>
+                    <li><strong>ろ過池：</strong>ろ過水頭監視、逆洗制御</li>
+                    <li><strong>消毒：</strong>塩素注入制御、残留塩素監視</li>
+                    <li><strong>送配水：</strong>配水池水位監視、送水ポンプ制御、配水圧力制御</li>
+                </ul>
+                
+                <h3>7.2 下水処理場での計装</h3>
+                <ul>
+                    <li><strong>流入施設：</strong>流入量測定、ゲート・ポンプ制御</li>
+                    <li><strong>水処理：</strong>DO（溶存酸素）制御、MLSS監視、返送汚泥制御</li>
+                    <li><strong>汚泥処理：</strong>汚泥濃度測定、脱水機制御、消化ガス監視</li>
+                    <li><strong>放流：</strong>水質監視（BOD、SS、大腸菌等）</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <strong>⚠️ 安全管理の重要性：</strong>
+                    <ul>
+                        <li>硫化水素などの有毒ガス検知システムの設置</li>
+                        <li>緊急遮断弁のインターロック制御</li>
+                        <li>停電時の非常用電源への自動切替</li>
+                        <li>異常時の警報発報と自動停止機能</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>8. 最新の計装技術トレンド</h2>
+                
+                <h3>8.1 IoT・クラウド連携</h3>
+                <ul>
+                    <li>無線センサーネットワークによる広域監視</li>
+                    <li>クラウドSCADAによる遠隔監視・制御</li>
+                    <li>ビッグデータ解析による予知保全</li>
+                </ul>
+                
+                <h3>8.2 AI・機械学習の活用</h3>
+                <ul>
+                    <li>運転最適化（薬品注入量の最適制御等）</li>
+                    <li>異常検知・故障予測</li>
+                    <li>エネルギー管理の最適化</li>
+                </ul>
+                
+                <h3>8.3 サイバーセキュリティ</h3>
+                <ul>
+                    <li>制御システムのセキュリティ対策強化</li>
+                    <li>ネットワーク分離、ファイアウォール設置</li>
+                    <li>定期的なセキュリティ監査の実施</li>
+                </ul>
+            </section>
+            
+            <section class="section">
+                <h2>9. 計装エンジニアとして身につけるべきスキル</h2>
+                
+                <div class="info-box">
+                    <strong>基礎知識</strong>
+                    <ul>
+                        <li>電気・電子工学の基礎（オームの法則、電子回路）</li>
+                        <li>制御理論（PID制御、シーケンス制御）</li>
+                        <li>流体力学・熱力学の基礎</li>
+                        <li>プロセス工学の理解</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <strong>実務スキル</strong>
+                    <ul>
+                        <li>P&ID（配管計装図）の読解・作成能力</li>
+                        <li>PLCプログラミング（ラダー図、ファンクションブロック）</li>
+                        <li>HMI/SCADA画面の設計・構築</li>
+                        <li>計装ループの設計・試験・調整</li>
+                        <li>トラブルシューティング能力</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <strong>コミュニケーション能力</strong>
+                    <ul>
+                        <li>顧客（施設運転員）との調整能力</li>
+                        <li>他工種（電気・機械・土木）との連携</li>
+                        <li>技術文書の作成能力</li>
+                        <li>プレゼンテーション能力</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>10. まとめ</h2>
+                
+                <div class="example-box">
+                    <p>計装は「測る」「伝える」「制御する」という3つの基本概念を通じて、プラント設備の安全で効率的な運転を支える重要な技術です。</p>
+                    
+                    <p><strong>計装エンジニアの使命：</strong></p>
+                    <ul>
+                        <li>24時間365日、安定した設備運転の実現</li>
+                        <li>省エネルギー・省力化の推進</li>
+                        <li>安全性の確保と事故の未然防止</li>
+                        <li>環境規制への適合と水質の確保</li>
+                    </ul>
+                    
+                    <p>新入社員の皆さんは、まず基本的な計装機器の動作原理と信号の流れを理解し、実際の現場で経験を積みながら、段階的にスキルを向上させていってください。</p>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>📌 新入社員へのアドバイス：</strong>
+                    <ul>
+                        <li>現場に足を運び、実際の機器を見て触れて学ぶ</li>
+                        <li>ベテラン技術者の作業を観察し、質問を積極的に行う</li>
+                        <li>小さなミスも報告し、チーム全体で共有する文化を大切に</li>
+                        <li>安全第一の意識を常に持ち続ける</li>
+                        <li>技術の進歩に対応できるよう、継続的な学習を心がける</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="company-info">技術商社 計装システムアップ事業部</div>
+            <div>WELS_DEV_GROUP - 新入社員教育資料</div>
+            <div>© 2025 All Rights Reserved</div>
+        </footer>
+    </div>
+</body>
+</html>

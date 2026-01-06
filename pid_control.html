@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>計装制御の基礎 - 中学生向け解説</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #764ba2;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .example-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .animation-container {
+            background: #f0f0f0;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* エアコンのアニメーション */
+        .aircon-demo {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .room {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 200px;
+            background: #f5f5dc;
+            border-top: 3px solid #8B4513;
+        }
+
+        .aircon {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 40px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .aircon-display {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #00ff00;
+            background: #000;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .temperature {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .wind {
+            position: absolute;
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 100px;
+        }
+
+        .wind-line {
+            width: 2px;
+            height: 20px;
+            background: #4FC3F7;
+            margin: 0 auto 5px;
+            opacity: 0;
+            animation: wind-flow 2s infinite;
+        }
+
+        @keyframes wind-flow {
+            0% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .wind-line:nth-child(1) { animation-delay: 0s; }
+        .wind-line:nth-child(2) { animation-delay: 0.3s; }
+        .wind-line:nth-child(3) { animation-delay: 0.6s; }
+
+        /* 水槽のアニメーション */
+        .tank-demo {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .water-tank {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            border: 3px solid #333;
+            border-top: none;
+            background: linear-gradient(to bottom, rgba(33, 150, 243, 0.3), rgba(33, 150, 243, 0.7));
+            overflow: hidden;
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to bottom, #64B5F6, #1976D2);
+            transition: height 1s ease;
+        }
+
+        .water-level-50 { height: 50%; }
+        .water-level-70 { height: 70%; }
+        .water-level-30 { height: 30%; }
+
+        .valve {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #ff9800;
+            border-radius: 50%;
+            border: 3px solid #333;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .valve.open {
+            transform: translateX(-50%) rotate(90deg);
+            background: #4caf50;
+        }
+
+        .pipe {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 140px;
+            background: #666;
+        }
+
+        .water-drop {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 12px;
+            background: #2196F3;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0;
+        }
+
+        .dropping {
+            animation: drop 1s infinite;
+        }
+
+        @keyframes drop {
+            0% {
+                top: 60px;
+                opacity: 1;
+            }
+            100% {
+                top: 200px;
+                opacity: 0;
+            }
+        }
+
+        .sensor {
+            position: absolute;
+            right: -30px;
+            width: 20px;
+            height: 20px;
+            background: #f44336;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .sensor.high { top: 30px; }
+        .sensor.low { bottom: 30px; }
+        .sensor.active { background: #4caf50; }
+
+        /* フィードバック制御の図 */
+        .feedback-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .diagram-box {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px 25px;
+            font-weight: bold;
+            color: #333;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #ffeb3b 60%);
+            padding: 2px 5px;
+            font-weight: bold;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .control-panel {
+            background: #263238;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .status.on { background: #4caf50; }
+        .status.off { background: #f44336; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .feedback-diagram {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 計装制御の基礎を学ぼう！</h1>
+
+        <div class="section">
+            <h2>📚 計装制御って何？</h2>
+            <p>
+                <span class="highlight">計装制御</span>とは、機械や装置を<strong>自動的にコントロール</strong>する技術のことです。
+                身の回りにある多くのものが計装制御で動いています！
+            </p>
+            <div class="example-box">
+                <h3>🏠 身近な例</h3>
+                <ul>
+                    <li>🌡️ <strong>エアコン</strong>：部屋の温度を自動で調整</li>
+                    <li>🚿 <strong>お風呂の給湯器</strong>：お湯の温度を一定に保つ</li>
+                    <li>🚗 <strong>車のクルーズコントロール</strong>：速度を自動で維持</li>
+                    <li>📱 <strong>スマホの画面の明るさ</strong>：周りの明るさに合わせて自動調整</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 フィードバック制御の仕組み</h2>
+            <p>計装制御の基本は<span class="highlight">フィードバック制御</span>です。これは「結果を見て、次の動作を決める」仕組みです。</p>
+
+            <div class="feedback-diagram">
+                <div class="diagram-box">目標値<br>(設定温度25℃)</div>
+                <span class="arrow">→</span>
+                <div class="diagram-box">制御装置<br>(エアコン)</div>
+                <span class="arrow">→</span>
+                <div class="diagram-box">結果<br>(部屋の温度)</div>
+                <span class="arrow">↓</span>
+            </div>
+            <div class="feedback-diagram">
+                <span class="arrow">←</span>
+                <div class="diagram-box">センサー<br>(温度計)</div>
+                <span class="arrow">←</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🌡️ 例1：エアコンの温度制御</h2>
+            <p>エアコンがどうやって部屋の温度を一定に保つか見てみましょう！</p>
+
+            <div class="animation-container">
+                <div class="aircon-demo">
+                    <div class="room"></div>
+                    <div class="aircon">
+                        <div class="aircon-display" id="airconStatus">25℃</div>
+                    </div>
+                    <div class="wind" id="windEffect">
+                        <div class="wind-line"></div>
+                        <div class="wind-line"></div>
+                        <div class="wind-line"></div>
+                    </div>
+                    <div class="temperature" id="roomTemp">28℃</div>
+                </div>
+                <div class="control-panel">
+                    <p>設定温度: 25℃</p>
+                    <p>現在の室温: <span id="currentTemp">28℃</span></p>
+                    <p>エアコン: <span id="airconState" class="status off">停止中</span></p>
+                    <button onclick="startAirconDemo()">デモを開始</button>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>🎯 制御の流れ</h3>
+                <ol>
+                    <li><strong>測定</strong>：温度センサーが部屋の温度を測る</li>
+                    <li><strong>比較</strong>：設定温度と現在の温度を比べる</li>
+                    <li><strong>判断</strong>：暑ければ冷房ON、適温なら停止</li>
+                    <li><strong>実行</strong>：エアコンが動作する</li>
+                    <li><strong>繰り返し</strong>：1に戻って継続的に監視</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💧 例2：水槽の水位制御</h2>
+            <p>水槽の水位を自動で一定に保つ仕組みを見てみましょう！</p>
+
+            <div class="animation-container">
+                <div class="tank-demo">
+                    <div class="valve" id="valve" onclick="toggleValve()"></div>
+                    <div class="pipe"></div>
+                    <div class="water-drop" id="waterDrop"></div>
+                    <div class="water-tank">
+                        <div class="water water-level-30" id="waterLevel"></div>
+                        <div class="sensor high" id="sensorHigh"></div>
+                        <div class="sensor low" id="sensorLow"></div>
+                    </div>
+                </div>
+                <div class="control-panel">
+                    <p>水位センサー: 
+                        <span id="highSensor" class="status off">上限</span>
+                        <span id="lowSensor" class="status off">下限</span>
+                    </p>
+                    <p>給水バルブ: <span id="valveState" class="status off">閉</span></p>
+                    <button onclick="startTankDemo()">自動制御デモ</button>
+                    <button onclick="drainWater()">水を抜く</button>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>🎯 ON/OFF制御</h3>
+                <ul>
+                    <li>水位が<strong>下限</strong>まで下がったら → バルブを<strong>開く</strong></li>
+                    <li>水位が<strong>上限</strong>まで上がったら → バルブを<strong>閉じる</strong></li>
+                    <li>これを繰り返して、水位を一定範囲に保つ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎮 制御の種類</h2>
+
+            <div class="example-box">
+                <h3>1️⃣ ON/OFF制御（オンオフ制御）</h3>
+                <p>スイッチのON/OFFだけで制御する最も簡単な方法</p>
+                <ul>
+                    <li>例：扇風機のスイッチ、電気ポットの保温</li>
+                    <li>メリット：簡単で安い</li>
+                    <li>デメリット：細かい調整ができない</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>2️⃣ 比例制御（P制御）</h3>
+                <p>差が大きいほど強く、小さいほど弱く動作</p>
+                <ul>
+                    <li>例：車のアクセル、蛇口の開き具合</li>
+                    <li>メリット：なめらかな制御ができる</li>
+                    <li>デメリット：完全に目標値に一致しないことがある</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h3>3️⃣ PID制御</h3>
+                <p>比例(P) + 積分(I) + 微分(D) を組み合わせた高度な制御</p>
+                <ul>
+                    <li>例：ドローンの姿勢制御、工場の温度管理</li>
+                    <li>メリット：とても正確な制御ができる</li>
+                    <li>デメリット：調整が難しい</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 まとめ</h2>
+            <div class="example-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h3>✨ 計装制御の重要ポイント</h3>
+                <ol>
+                    <li><strong>センサー</strong>で現在の状態を測る</li>
+                    <li><strong>目標値</strong>と比較する</li>
+                    <li>差に応じて<strong>制御動作</strong>を決める</li>
+                    <li>結果を<strong>フィードバック</strong>して繰り返す</li>
+                </ol>
+                <p style="margin-top: 20px;">
+                    計装制御は私たちの生活を便利で快適にしてくれる大切な技術です。
+                    エアコン、冷蔵庫、車など、身の回りの多くのものに使われています！
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let airconInterval;
+        let tankInterval;
+        let currentRoomTemp = 28;
+        let currentWaterLevel = 30;
+        let isValveOpen = false;
+        let isDraining = false;
+
+        function startAirconDemo() {
+            clearInterval(airconInterval);
+            currentRoomTemp = 28;
+            document.getElementById('roomTemp').textContent = currentRoomTemp + '℃';
+            document.getElementById('currentTemp').textContent = currentRoomTemp + '℃';
+
+            airconInterval = setInterval(() => {
+                if (currentRoomTemp > 25) {
+                    // エアコンON
+                    document.getElementById('airconState').textContent = '冷房中';
+                    document.getElementById('airconState').className = 'status on';
+                    document.getElementById('windEffect').style.display = 'block';
+                    currentRoomTemp -= 0.5;
+                } else if (currentRoomTemp < 24) {
+                    // 温度が下がりすぎたらOFF
+                    document.getElementById('airconState').textContent = '停止中';
+                    document.getElementById('airconState').className = 'status off';
+                    document.getElementById('windEffect').style.display = 'none';
+                    currentRoomTemp += 0.3;
+                } else {
+                    // 適温維持
+                    document.getElementById('airconState').textContent = '送風中';
+                    document.getElementById('airconState').className = 'status on';
+                }
+
+                document.getElementById('roomTemp').textContent = currentRoomTemp.toFixed(1) + '℃';
+                document.getElementById('currentTemp').textContent = currentRoomTemp.toFixed(1) + '℃';
+            }, 500);
+        }
+
+        function startTankDemo() {
+            clearInterval(tankInterval);
+            isDraining = false;
+
+            tankInterval = setInterval(() => {
+                const waterElement = document.getElementById('waterLevel');
+
+                // 水位センサーの状態を更新
+                if (currentWaterLevel >= 70) {
+                    document.getElementById('sensorHigh').className = 'sensor high active';
+                    document.getElementById('highSensor').className = 'status on';
+                    isValveOpen = false;
+                } else {
+                    document.getElementById('sensorHigh').className = 'sensor high';
+                    document.getElementById('highSensor').className = 'status off';
+                }
+
+                if (currentWaterLevel <= 30) {
+                    document.getElementById('sensorLow').className = 'sensor low active';
+                    document.getElementById('lowSensor').className = 'status on';
+                    if (!isDraining) {
+                        isValveOpen = true;
+                    }
+                } else {
+                    document.getElementById('sensorLow').className = 'sensor low';
+                    document.getElementById('lowSensor').className = 'status off';
+                }
+
+                // バルブの状態を更新
+                if (isValveOpen && !isDraining) {
+                    document.getElementById('valve').className = 'valve open';
+                    document.getElementById('valveState').textContent = '開';
+                    document.getElementById('valveState').className = 'status on';
+                    document.getElementById('waterDrop').className = 'water-drop dropping';
+                    currentWaterLevel = Math.min(100, currentWaterLevel + 2);
+                } else {
+                    document.getElementById('valve').className = 'valve';
+                    document.getElementById('valveState').textContent = '閉';
+                    document.getElementById('valveState').className = 'status off';
+                    document.getElementById('waterDrop').className = 'water-drop';
+                }
+
+                // 自然な水の減少
+                if (!isValveOpen && !isDraining) {
+                    currentWaterLevel = Math.max(0, currentWaterLevel - 0.5);
+                }
+
+                // 排水中
+                if (isDraining) {
+                    currentWaterLevel = Math.max(0, currentWaterLevel - 3);
+                    if (currentWaterLevel <= 0) {
+                        isDraining = false;
+                    }
+                }
+
+                // 水位を更新
+                waterElement.style.height = currentWaterLevel + '%';
+            }, 100);
+        }
+
+        function toggleValve() {
+            isValveOpen = !isValveOpen;
+        }
+
+        function drainWater() {
+            isDraining = true;
+            isValveOpen = false;
+        }
+
+        // ページ読み込み時に最初のデモを開始
+        window.onload = function() {
+            setTimeout(() => {
+                startAirconDemo();
+                startTankDemo();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

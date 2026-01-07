@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>電磁流量計と実流量校正設備の全体像</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #222;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      background-color: #fff;
+    }
+    header {
+      border-bottom: 3px solid #005bac;
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      color: #005bac;
+    }
+    header p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    h2 {
+      border-left: 6px solid #005bac;
+      padding-left: 8px;
+      margin-top: 32px;
+      font-size: 1.3rem;
+    }
+    h3 {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #005bac;
+    }
+    p {
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+    ul {
+      padding-left: 1.4em;
+      font-size: 0.95rem;
+    }
+    li { margin: 4px 0; }
+
+    .tip {
+      border-left: 4px solid #00a19a;
+      background: #f0faf9;
+      padding: 8px 12px;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+
+    .block-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px 0 8px;
+    }
+    .block {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 10px;
+      min-width: 130px;
+      text-align: center;
+      background: #fafafa;
+      font-size: 0.85rem;
+    }
+    .block.important {
+      border-color: #005bac;
+      background: #e9f3ff;
+    }
+    .arrow {
+      font-size: 1.4rem;
+      color: #888;
+    }
+    .small { font-size: 0.8rem; color: #555; }
+
+    figure {
+      margin: 18px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fafafa;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: #555;
+      text-align: center;
+    }
+
+    .two-column {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 12px 0;
+    }
+    .two-column .col {
+      flex: 1 1 260px;
+    }
+
+    .signal-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.9rem;
+      margin: 8px 0 16px;
+    }
+    .signal-table th,
+    .signal-table td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+    }
+    .signal-table th {
+      background: #eef4ff;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: #f2f2f2;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.75rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>電磁流量計と実流量校正設備の全体像</h1>
+      <p>東京計器 実流量校正設備（JCSS）の構成を例に、検出器・変換器・調節計・オペレーション設備を整理</p>
+    </header>
+
+    <section id="intro">
+      <p>
+        本資料では、東京計器株式会社の<strong>実流量校正設備</strong>（<a href="https://www.tokyokeiki.jp/products/ryutai/jcss.html" target="_blank" rel="noopener noreferrer">公式紹介ページ</a>）を例に、
+        <strong>電磁流量計の検出器・変換器</strong>と、それを取り巻く<strong>調節計（制御コンピュータ）</strong>および<strong>オペレーション設備</strong>の関係を、社会人1年目にも分かるように解説します。
+      </p>
+      <div class="tip">
+        <strong>ポイント：</strong>「水の流れ」→「電気信号」→「自動制御」→「人の操作」という流れで見ると、全体像がつかみやすくなります。
+      </div>
+    </section>
+
+    <section id="facility-overview">
+      <h2>1. 実流量校正設備の全体イメージ</h2>
+      <p>
+        実流量校正設備は、大きく分けて次のような設備で構成されています。
+      </p>
+      <ul>
+        <li>高い位置から水を安定して供給する<strong>高架水槽</strong></li>
+        <li>実際に水を流す<strong>管路試験ライン・開水路試験ライン</strong></li>
+        <li>基準となる<strong>マスターメータ（標準流量計）</strong>と<strong>秤量システム</strong></li>
+        <li>ポンプ、制御弁、回転式ダイバータなどの<strong>操作部（設備を実際に動かす部分）</strong></li>
+        <li>流量を監視・制御する<strong>制御コンピュータ／調節計</strong>と<strong>コントロールルーム</strong></li>
+      </ul>
+
+      <figure>
+        <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_brochure.jpg" alt="東京計器 実流量校正設備 パンフレットイメージ">
+        <figcaption>図1 実流量校正設備のイメージ（出典：東京計器 実流量校正設備紹介ページ）</figcaption>
+      </figure>
+
+      <div class="two-column">
+        <div class="col">
+          <figure>
+            <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_faci01.jpg" alt="高架水槽の写真">
+            <figcaption>図2 高架水槽（一定の圧力で水を供給）</figcaption>
+          </figure>
+        </div>
+        <div class="col">
+          <figure>
+            <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_faci04.jpg" alt="管路試験ラインの写真">
+            <figcaption>図3 管路試験ライン（電磁流量計など被試験機を組み込む配管）</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="two-column">
+        <div class="col">
+          <figure>
+            <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_faci03.jpg" alt="マスターメータ（標準流量計）の写真">
+            <figcaption>図4 マスターメータ（標準流量計）</figcaption>
+          </figure>
+        </div>
+        <div class="col">
+          <figure>
+            <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_faci06.jpg" alt="コントロールルームの写真">
+            <figcaption>図5 コントロールルーム（調節計・制御コンピュータとオペレータの操作盤）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="overall-block">
+      <h2>2. 電磁流量計を含む計装ループの全体ブロック図</h2>
+      <p>
+        実流量校正設備の中で、電磁流量計と周辺設備の関係を<strong>一つの計装ループ</strong>として見ると、次のようになります。
+      </p>
+
+      <div class="block-diagram">
+        <div class="block">
+          高架水槽<br><span class="small">一定水圧で水を供給</span>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="block">
+          試験ライン配管<br><span class="small">管路試験ライン・開水路</span>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="block important">
+          被試験電磁流量計<br><span class="small">検出器＋変換器</span>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="block">
+          調節計／制御コンピュータ<br><span class="small">PLC・DCS 等</span>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="block">
+          操作部<br><span class="small">ポンプ・制御弁・ダイバータ等</span>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="block">
+          オペレータ<br><span class="small">コントロールルームで監視・操作</span>
+        </div>
+      </div>
+
+      <p>
+        これを「何がどこからどこへ伝わるか」で見ると、次のような流れになります。
+      </p>
+      <ul>
+        <li><strong>水の流れ</strong>が、被試験電磁流量計の<strong>検出器</strong>で検知される</li>
+        <li>検出された信号が<strong>変換器</strong>で電気信号（例：4–20&nbsp;mA）に変えられる</li>
+        <li>その信号を<strong>調節計（制御コンピュータ）</strong>が受け取り、「もっと流す／絞る」を計算する</li>
+        <li>計算結果が<strong>操作部（ポンプ・制御弁など）</strong>に送られ、実際の流量が変わる</li>
+        <li>全体の状態を<strong>オペレータ</strong>がコントロールルームで監視・操作する</li>
+      </ul>
+    </section>
+
+    <section id="emf-detail">
+      <h2>3. 電磁流量計の「検出器」と「変換器」</h2>
+
+      <h3>3-1 検出器（センサ部）</h3>
+      <p>
+        電磁流量計の<strong>検出器</strong>は、配管に直結して取り付けられる<strong>流量計本体</strong>です。内部には次のような構造があります。
+      </p>
+      <ul>
+        <li>内側に<strong>ライニング</strong>（ゴムや樹脂）を施した計測管</li>
+        <li>管の外側に巻かれた<strong>励磁コイル</strong>（磁石の役割）</li>
+        <li>管内の両側に取り付けられた<strong>電極</strong>（水の中の電圧を拾う）</li>
+      </ul>
+      <p>
+        水がこの計測管を流れると、磁界と水の流れの組み合わせで小さな電圧が発生します。<br>
+        この電圧の大きさが<strong>流量に比例</strong>しているため、電圧を測れば流量が分かります。
+      </p>
+
+      <div class="tip">
+        イメージとしては、「水道のメーターの中で、電気的に水の流れを感じている部分」が検出器です。
+      </div>
+
+      <h3>3-2 変換器（トランスミッタ）</h3>
+      <p>
+        電磁流量計の<strong>変換器</strong>は、検出器から来た微小な電圧信号を、
+        <strong>制御盤で扱える信号</strong>に変換する「頭脳＋信号変換器」です。通常、次のような役割を持ちます。
+      </p>
+      <ul>
+        <li>検出器からの微小な電圧を増幅し、ノイズを取り除く</li>
+        <li>流量に換算して<strong>表示</strong>したり、<strong>4–20&nbsp;mA やパルス信号</strong>として出力する</li>
+        <li>ゼロ点調整、スパン設定、単位（m<sup>3</sup>/h など）の設定</li>
+        <li>自己診断（電極のコーティング、配線異常など）の監視</li>
+      </ul>
+
+      <p>
+        実流量校正設備では、被試験の電磁流量計の変換器から出た信号を、
+        <strong>比較用のマスターメータ</strong>や<strong>秤量システム</strong>の結果と見比べて、
+        「どの程度ずれているか」を評価します。
+      </p>
+
+      <table class="signal-table">
+        <thead>
+          <tr>
+            <th>信号の向き</th>
+            <th>内容</th>
+            <th>典型的な信号種別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>検出器 → 変換器</td>
+            <td>電極で検出した微小電圧</td>
+            <td>mV レベルのアナログ信号</td>
+          </tr>
+          <tr>
+            <td>変換器 → 調節計</td>
+            <td>瞬時流量、積算流量</td>
+            <td>4–20&nbsp;mA（AI）、パルス、デジタル通信</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="controller-operation">
+      <h2>4. 設備的に考える「調節計（動作）」</h2>
+      <p>
+        実流量校正設備では、コントロールルーム内の<strong>制御コンピュータ／PLC</strong>が、
+        実質的に<strong>調節計（コントローラ）</strong>の役割を果たします。
+      </p>
+
+      <figure>
+        <img src="https://www.tokyokeiki.jp/Portals/0/images/products/ryutai/jcss_faci06.jpg" alt="コントロールルームの写真">
+        <figcaption>図6 コントロールルーム（ここに調節計・制御コンピュータと操作盤が集約される）</figcaption>
+      </figure>
+
+      <h3>4-1 調節計の基本動作</h3>
+      <p>
+        調節計は、次のような流れで動作します（流量制御の例）。
+      </p>
+      <ol>
+        <li>オペレータが<strong>目標流量（設定値）</strong>を入力する（例：<code>Q = 500&nbsp;m³/h</code>）。</li>
+        <li>調節計が、
+          <ul>
+            <li>被試験電磁流量計の信号</li>
+            <li>マスターメータ（標準流量計）の信号</li>
+          </ul>
+          を取り込み、実際の流量（<strong>測定値</strong>）を把握する。
+        </li>
+        <li>設定値と測定値の差（偏差）から、「どれだけバルブを開ける／閉じるか」を<strong>PID制御</strong>などで計算する。</li>
+        <li>計算結果を<strong>操作信号（例：4–20&nbsp;mA の開度指令）</strong>として、制御弁やポンプに出力する。</li>
+        <li>その結果、実際の流量が変わり、測定値が再び調節計に戻ってくる（制御ループ）。</li>
+      </ol>
+
+      <h3>4-2 校正時のイメージ（簡略）</h3>
+      <p>
+        電磁流量計を校正するときは、次のような流れで調節計が働いているとイメージできます。
+      </p>
+      <ul>
+        <li>指定した流量になるように、ポンプの運転や制御弁の開度を自動調整する</li>
+        <li>流量が安定したら、秤量システムやマスターメータと連携して計測タイミングを制御する</li>
+        <li>必要な複数点（例：25%、50%、75%、100%）の流量条件を、自動で順番に作り出す</li>
+      </ul>
+
+      <p>
+        設備的に見れば、
+        <strong>「流量条件を作る頭脳」＝調節計／制御コンピュータ</strong>
+        と考えると分かりやすくなります。
+      </p>
+    </section>
+
+    <section id="operator">
+      <h2>5. オペレーション設備と人の操作</h2>
+      <p>
+        オペレーション設備は、主に<strong>コントロールルーム側</strong>と<strong>現場側</strong>に分けて考えると整理しやすくなります。
+      </p>
+
+      <h3>5-1 コントロールルーム側のオペレーション</h3>
+      <p>
+        コントロールルームには、システムを操作するための<strong>操作盤・監視画面</strong>がまとめられています。
+        ここでオペレータが行う代表的な操作は次の通りです。
+      </p>
+      <ul>
+        <li>どの試験ラインを使うかを選択（口径 50A ～ 600A、開水路ライン など）</li>
+        <li>試験方法の選択：
+          <ul>
+            <li>マスターメータによる<strong>比較法</strong></li>
+            <li>秤量システムによる<strong>秤量法</strong></li>
+          </ul>
+        </li>
+        <li>目標流量値の設定（例：200, 500, 1000&nbsp;m³/h）</li>
+        <li>試験開始／停止ボタンの操作</li>
+        <li>警報の確認と、必要に応じた復旧操作</li>
+        <li>試験結果（被試験電磁流量計と標準の差）の確認・保存・印刷</li>
+      </ul>
+
+      <div class="tip">
+        現場でいうと、「DCSのオペステーション」や「中央監視盤」と同じイメージで考えると理解しやすい部分です。
+      </div>
+
+      <h3>5-2 現場側（フィールド）の操作</h3>
+      <p>
+        現場（管路試験ラインまわり）では、次のような操作や点検が行われます。
+      </p>
+      <ul>
+        <li>被試験の電磁流量計・配管の取り付け／取り外し</li>
+        <li>フランジ接続部やパッキンの漏れ点検</li>
+        <li>電磁流量計の電極部が水で満たされているかの確認</li>
+        <li>必要に応じたバルブの開閉（準備時の手動操作）</li>
+        <li>ポンプや回転式ダイバータの外観異常の確認</li>
+      </ul>
+
+      <p>
+        これらの現場作業と、コントロールルームの自動制御が組み合わさって、
+        安全かつ正確な流量校正が行われます。
+      </p>
+    </section>
+
+    <section id="mapping">
+      <h2>6. この設備の中での「検出部・変換部・調節部・操作部」対応まとめ</h2>
+      <p>
+        最後に、<strong>工業計器の4要素</strong>と、実流量校正設備のどの部分が対応するかを整理します。
+      </p>
+
+      <table class="signal-table">
+        <thead>
+          <tr>
+            <th>工業計器の要素</th>
+            <th>この設備での具体例</th>
+            <th>ポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>検出部（検出器）</td>
+            <td>
+              被試験電磁流量計の<strong>検出器</strong>（配管に挿入されているセンサ部）<br>
+              ＋ マスターメータ（標準流量計）の検出部
+            </td>
+            <td>実際の水の流れ（流量）を感じ取る部分</td>
+          </tr>
+          <tr>
+            <td>変換部（変換器）</td>
+            <td>
+              被試験電磁流量計の<strong>変換器（トランスミッタ）</strong><br>
+              マスターメータ、秤量システムの信号変換部
+            </td>
+            <td>検出した情報を、制御盤で扱える電気信号に変える部分</td>
+          </tr>
+          <tr>
+            <td>調節部（調節計）</td>
+            <td>
+              コントロールルーム内の<strong>制御コンピュータ／PLC</strong><br>
+              （流量制御用プログラム、試験シーケンス）
+            </td>
+            <td>設定値と測定値を比較し、「どれだけ操作するか」を計算する頭脳</td>
+          </tr>
+          <tr>
+            <td>操作部（操作機器）</td>
+            <td>
+              ポンプ、制御弁、回転式ダイバータなどの<strong>アクチュエータ</strong>
+            </td>
+            <td>調節部からの指令を受けて、実際に水の流れを変える部分</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        ここに<strong>オペレーション設備（人とHMI）</strong>が加わることで、
+        <strong>「人が理解しやすく、安全に運転・校正できるシステム」</strong>として成り立っています。
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        写真出典：東京計器株式会社「<a href="https://www.tokyokeiki.jp/products/ryutai/jcss.html" target="_blank" rel="noopener noreferrer">実流量校正設備紹介</a>」ウェブページ（参照：公開情報）。<br>
+        本HTMLは教育用の説明資料として作成したものであり、正式な仕様書ではありません。
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

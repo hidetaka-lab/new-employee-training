@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圧力計測の基礎知識 - 中学生向け解説</title>
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            font-size: 1.3em;
+        }
+        .intro-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+        }
+        .pressure-type {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+        }
+        .example {
+            background: #fff3cd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #ffc107;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .key-point {
+            background: #d1ecf1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #bee5eb;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .icon {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+        ul {
+            line-height: 2;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .highlight {
+            background: yellow;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 圧力計測の世界へようこそ！</h1>
+        <p class="subtitle">工業計器で圧力を測る仕組みを楽しく学ぼう</p>
+
+        <div class="intro-box">
+            <h2 style="margin-top: 0;">📚 はじめに - 圧力って何だろう？</h2>
+            <p>
+                みなさん、<span class="highlight">圧力</span>という言葉を聞いたことがありますか？
+                圧力とは、<strong>「ある面積に対して、どれくらいの力が加わっているか」</strong>を表す量です。
+            </p>
+            <p>
+                例えば、画びょうの先は細いので、少しの力でも壁に刺さります。これは、細い先端に力が集中して、
+                <strong>圧力が大きくなる</strong>からです。逆に、同じ力でも手のひら全体で押すと刺さりません。
+            </p>
+            <p>
+                圧力の単位は <strong>Pa（パスカル）</strong>や <strong>kPa（キロパスカル）</strong>を使います。
+                天気予報で聞く「ヘクトパスカル（hPa）」も圧力の単位です！
+            </p>
+        </div>
+
+        <h2>🎯 なぜ圧力を測ることが大切なの？</h2>
+        <p>
+            工場や日常生活では、圧力を正確に測ることがとても重要です。その理由を見てみましょう：
+        </p>
+        <ul>
+            <li><span class="icon">🏭</span> <strong>工場の安全管理</strong>：ボイラーや配管の圧力が高すぎると危険！</li>
+            <li><span class="icon">🚗</span> <strong>自動車のタイヤ</strong>：適切な空気圧で安全運転</li>
+            <li><span class="icon">🏥</span> <strong>医療機器</strong>：血圧計で健康チェック</li>
+            <li><span class="icon">✈️</span> <strong>飛行機</strong>：高度計は気圧を測って高さを知る</li>
+            <li><span class="icon">🍳</span> <strong>圧力鍋</strong>：圧力を利用して短時間調理</li>
+        </ul>
+
+        <h2>🔧 圧力計の種類と仕組み</h2>
+        <p>
+            圧力を測る計器にはいろいろな種類があります。それぞれ得意な場面が違うので、
+            目的に合わせて使い分けます。主な圧力計を見ていきましょう！
+        </p>
+
+        <div class="pressure-type">
+            <h3>1. ブルドン管圧力計（機械式圧力計）</h3>
+            <p>
+                <strong>仕組み：</strong>C字型に曲がった金属管（ブルドン管）に圧力がかかると、
+                管がまっすぐになろうとする性質を利用します。この動きを針に伝えて圧力を表示します。
+            </p>
+            <p>
+                <strong>特徴：</strong>
+            </p>
+            <ul>
+                <li>電気がいらない（停電でも使える！）</li>
+                <li>構造がシンプルで壊れにくい</li>
+                <li>目盛りを直接読むので分かりやすい</li>
+            </ul>
+            <div class="example">
+                <div class="example-title">💡 使用例</div>
+                <ul>
+                    <li>🚲 自転車の空気入れについている圧力計</li>
+                    <li>🏭 工場のボイラーや配管の圧力監視</li>
+                    <li>🧯 消火器の圧力チェック</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pressure-type">
+            <h3>2. デジタル圧力計（電子式圧力計）</h3>
+            <p>
+                <strong>仕組み：</strong>圧力センサー（半導体など）が圧力を電気信号に変換し、
+                その信号をデジタル表示します。
+            </p>
+            <p>
+                <strong>特徴：</strong>
+            </p>
+            <ul>
+                <li>数字で正確な値が読める</li>
+                <li>データをコンピュータに送れる</li>
+                <li>警報機能を付けられる</li>
+            </ul>
+            <div class="example">
+                <div class="example-title">💡 使用例</div>
+                <ul>
+                    <li>🏥 デジタル血圧計</li>
+                    <li>🚗 最新の車のタイヤ空気圧モニター</li>
+                    <li>🏭 自動制御が必要な製造ライン</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pressure-type">
+            <h3>3. U字管マノメーター（液柱圧力計）</h3>
+            <p>
+                <strong>仕組み：</strong>U字型のガラス管に液体（水や水銀）を入れ、
+                圧力差による液面の高さの違いで圧力を測ります。
+            </p>
+            <p>
+                <strong>特徴：</strong>
+            </p>
+            <ul>
+                <li>原理が単純で理解しやすい</li>
+                <li>低い圧力の測定に向いている</li>
+                <li>校正用の基準器として使われる</li>
+            </ul>
+            <div class="example">
+                <div class="example-title">💡 使用例</div>
+                <ul>
+                    <li>🔬 理科の実験室での圧力測定</li>
+                    <li>🌬️ エアコンのフィルター詰まりチェック</li>
+                    <li>📏 他の圧力計の精度確認</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pressure-type">
+            <h3>4. ダイヤフラム式圧力計</h3>
+            <p>
+                <strong>仕組み：</strong>薄い膜（ダイヤフラム）が圧力を受けて変形する量を測定します。
+            </p>
+            <p>
+                <strong>特徴：</strong>
+            </p>
+            <ul>
+                <li>腐食性の液体でも測定できる</li>
+                <li>衛生的（食品工場で使える）</li>
+                <li>低圧の測定が得意</li>
+            </ul>
+            <div class="example">
+                <div class="example-title">💡 使用例</div>
+                <ul>
+                    <li>🥛 食品・飲料工場の製造ライン</li>
+                    <li>💊 製薬工場のクリーンルーム</li>
+                    <li>🧪 化学薬品を扱う設備</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <h3 style="margin-top: 0;">📌 覚えておこう！圧力の種類</h3>
+            <ul>
+                <li><strong>ゲージ圧：</strong>大気圧を0として測った圧力（タイヤの空気圧など）</li>
+                <li><strong>絶対圧：</strong>完全な真空を0として測った圧力（天気図の気圧など）</li>
+                <li><strong>差圧：</strong>2つの場所の圧力の差（フィルターの前後など）</li>
+            </ul>
+        </div>
+
+        <h2>📊 圧力計の比較表</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>種類</th>
+                <th>精度</th>
+                <th>価格</th>
+                <th>メンテナンス</th>
+                <th>おすすめ用途</th>
+            </tr>
+            <tr>
+                <td>ブルドン管</td>
+                <td>普通</td>
+                <td>安い</td>
+                <td>簡単</td>
+                <td>一般的な圧力監視</td>
+            </tr>
+            <tr>
+                <td>デジタル</td>
+                <td>高い</td>
+                <td>高い</td>
+                <td>定期的に必要</td>
+                <td>精密測定・自動制御</td>
+            </tr>
+            <tr>
+                <td>U字管</td>
+                <td>高い</td>
+                <td>安い</td>
+                <td>ほぼ不要</td>
+                <td>校正・実験</td>
+            </tr>
+            <tr>
+                <td>ダイヤフラム</td>
+                <td>普通</td>
+                <td>中程度</td>
+                <td>定期的に必要</td>
+                <td>食品・薬品工場</td>
+            </tr>
+        </table>
+
+        <h2>🎓 まとめ</h2>
+        <p>
+            圧力計測は私たちの生活や産業を支える大切な技術です。それぞれの圧力計には
+            得意・不得意があるので、<strong>測りたいものや場所に合わせて選ぶ</strong>ことが重要です。
+        </p>
+        <p>
+            身の回りを見渡すと、意外なところに圧力計が使われています。
+            自転車の空気入れ、血圧計、車のメーター...これらも立派な圧力計です！
+        </p>
+        <p>
+            圧力の世界は奥が深く、まだまだ学ぶことがたくさんあります。
+            興味を持った人は、ぜひもっと詳しく調べてみてくださいね！
+        </p>
+
+        <div class="footer">
+            <p>🔬 圧力計測の基礎知識 - 中学生向け解説 🔬</p>
+            <p>作成日：2024年11月</p>
+        </div>
+    </div>
+</body>
+</html>

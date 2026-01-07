@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流量計のすべて - 中学生のための完全ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .intro-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .flow-illustration {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .basic-concept {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3498db;
+        }
+
+        .basic-concept h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+        }
+
+        .flowmeter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .flowmeter-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #3498db;
+        }
+
+        .flowmeter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .flowmeter-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .principle {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .principle h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .usage-example {
+            background: #e8f8f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 3px solid #27ae60;
+        }
+
+        .usage-example h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .pros {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+
+        .cons {
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+        }
+
+        .pros h5, .cons h5 {
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .pros h5 {
+            color: #155724;
+        }
+
+        .cons h5 {
+            color: #721c24;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-left: 10px;
+        }
+
+        .think-section {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .think-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .question {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .illustration-svg {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            margin: 15px auto;
+            display: block;
+        }
+
+        .comparison-table {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            .flowmeter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 流量計のすべて</h1>
+        <p class="subtitle">中学生のための完全ガイド - 9種類の流量計を徹底解説！</p>
+
+        <div class="intro-section">
+            <h2>📚 流量計って何だろう？</h2>
+            <p>
+                みなさんは、家の水道メーターを見たことがありますか？あれも流量計の一種です！
+                流量計は、パイプの中を流れる液体や気体の「量」を測る大切な機械です。
+            </p>
+            <div class="flow-illustration">
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="20" y="80" width="260" height="40" fill="#95a5a6" rx="5"/>
+                    <rect x="25" y="85" width="250" height="30" fill="#bdc3c7" rx="3"/>
+
+                    <!-- 流体の流れ -->
+                    <path d="M 30 100 Q 80 90, 130 100 T 230 100" stroke="#3498db" stroke-width="3" fill="none" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M 30 100 Q 80 110, 130 100 T 230 100" stroke="#3498db" stroke-width="3" fill="none" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="1s" repeatCount="indefinite"/>
+                    </path>
+
+                    <!-- 流量計 -->
+                    <rect x="120" y="60" width="60" height="80" fill="#e74c3c" rx="5"/>
+                    <circle cx="150" cy="100" r="20" fill="white"/>
+                    <text x="150" y="105" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">流量</text>
+
+                    <!-- 矢印 -->
+                    <path d="M 250 100 L 270 100 L 265 95 M 270 100 L 265 105" stroke="#2c3e50" stroke-width="2" fill="none"/>
+
+                    <!-- ラベル -->
+                    <text x="150" y="160" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">流量計で測定</text>
+                </svg>
+            </div>
+            <p>
+                例えば、お風呂に水を入れるとき、「1分間に何リットルの水が出ているか」を知りたいときに流量計を使います。
+                工場では、正確な量の材料を混ぜたり、エネルギーの使用量を管理したりするのに欠かせません。
+            </p>
+        </div>
+
+        <div class="basic-concept">
+            <h2>🎯 流量の基本を理解しよう</h2>
+            <p><strong>流量とは：</strong>「単位時間あたりに流れる流体の量」のことです。</p>
+            <p>例：蛇口から1分間に10リットルの水が出る → 流量は10リットル/分</p>
+            <p><strong>なぜ測る必要があるの？</strong></p>
+            <ul>
+                <li>💧 水道料金を計算するため</li>
+                <li>⚡ エネルギーの使用量を管理するため</li>
+                <li>🏭 工場で正確な製品を作るため</li>
+                <li>🌡️ 安全に機械を動かすため</li>
+            </ul>
+        </div>
+
+        <h2 style="text-align: center; color: #2c3e50; margin: 30px 0;">📊 9種類の流量計を詳しく見てみよう</h2>
+
+        <div class="flowmeter-grid">
+            <!-- 1. 容積式流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">⚙️</span> 容積式流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- ケース -->
+                    <rect x="50" y="40" width="200" height="120" fill="#ecf0f1" stroke="#34495e" stroke-width="2" rx="10"/>
+
+                    <!-- 歯車1 -->
+                    <g transform="translate(120, 100)">
+                        <circle r="30" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                        <rect x="-5" y="-30" width="10" height="60" fill="#2980b9"/>
+                        <rect x="-30" y="-5" width="60" height="10" fill="#2980b9"/>
+                        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/>
+                    </g>
+
+                    <!-- 歯車2 -->
+                    <g transform="translate(180, 100)">
+                        <circle r="30" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+                        <rect x="-5" y="-30" width="10" height="60" fill="#c0392b"/>
+                        <rect x="-30" y="-5" width="60" height="10" fill="#c0392b"/>
+                        <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="3s" repeatCount="indefinite"/>
+                    </g>
+
+                    <!-- カウンター -->
+                    <rect x="90" y="20" width="120" height="30" fill="#2c3e50" rx="5"/>
+                    <text x="150" y="40" text-anchor="middle" fill="white" font-size="14" font-weight="bold">0123.45 L</text>
+
+                    <!-- 流れの矢印 -->
+                    <path d="M 20 100 L 40 100 L 35 95 M 40 100 L 35 105" stroke="#2c3e50" stroke-width="2" fill="none"/>
+                    <path d="M 260 100 L 280 100 L 275 95 M 280 100 L 275 105" stroke="#2c3e50" stroke-width="2" fill="none"/>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>歯車やピストンが回転して、決まった量の液体を「数える」方式です。バケツリレーのように、小さな部屋で液体を区切って測ります。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>家庭の水道メーター、ガソリンスタンドの給油機、灯油の量り売り機など</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>とても正確</li>
+                            <li>粘度の高い液体もOK</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>部品が摩耗する</li>
+                            <li>気体には不向き</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. タービン流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">🌀</span> タービン流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="30" y="70" width="240" height="60" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" rx="5"/>
+                    <rect x="35" y="75" width="230" height="50" fill="#bdc3c7"/>
+
+                    <!-- タービン羽根 -->
+                    <g transform="translate(150, 100)">
+                        <circle r="3" fill="#2c3e50"/>
+                        <g>
+                            <path d="M 0,-25 L 10,-5 L 0,0 Z" fill="#e74c3c"/>
+                            <path d="M 25,0 L 5,10 L 0,0 Z" fill="#e74c3c"/>
+                            <path d="M 0,25 L -10,5 L 0,0 Z" fill="#e74c3c"/>
+                            <path d="M -25,0 L -5,-10 L 0,0 Z" fill="#e74c3c"/>
+                            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" repeatCount="indefinite"/>
+                        </g>
+                    </g>
+
+                    <!-- センサー -->
+                    <rect x="140" y="40" width="20" height="30" fill="#f39c12" stroke="#e67e22" stroke-width="2" rx="3"/>
+                    <circle cx="150" cy="55" r="5" fill="#e67e22"/>
+
+                    <!-- 信号線 -->
+                    <path d="M 150 40 L 150 20 L 200 20" stroke="#e67e22" stroke-width="2" fill="none"/>
+                    <rect x="200" y="10" width="60" height="20" fill="#2c3e50" rx="3"/>
+                    <text x="230" y="24" text-anchor="middle" fill="white" font-size="10">センサー</text>
+
+                    <!-- 流れ -->
+                    <path d="M 40 100 L 260 100" stroke="#3498db" stroke-width="3" stroke-dasharray="10,5">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>流れる液体や気体が羽根車（タービン）を回転させます。回転数を数えることで流量がわかります。風車と同じ原理です！</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>石油パイプライン、天然ガスの測定、工業用水の管理、ビールやジュースの工場</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>応答が速い</li>
+                            <li>広い範囲を測定可能</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>汚れた流体は苦手</li>
+                            <li>粘度が高いと誤差</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 超音波流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">🔊</span> 超音波流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="30" y="70" width="240" height="60" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" rx="5"/>
+                    <rect x="35" y="75" width="230" height="50" fill="#bdc3c7"/>
+
+                    <!-- 送信機 -->
+                    <rect x="70" y="50" width="30" height="20" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="3"/>
+                    <text x="85" y="35" text-anchor="middle" fill="#2c3e50" font-size="10" font-weight="bold">送信</text>
+
+                    <!-- 受信機 -->
+                    <rect x="200" y="130" width="30" height="20" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="3"/>
+                    <text x="215" y="165" text-anchor="middle" fill="#2c3e50" font-size="10" font-weight="bold">受信</text>
+
+                    <!-- 超音波の経路 -->
+                    <path d="M 85 70 L 215 130" stroke="#f39c12" stroke-width="2" stroke-dasharray="5,3">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-8" dur="2s" repeatCount="indefinite"/>
+                    </path>
+
+                    <!-- 音波を表現 -->
+                    <g opacity="0.6">
+                        <circle cx="85" cy="70" r="10" fill="none" stroke="#3498db" stroke-width="1">
+                            <animate attributeName="r" from="5" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+
+                    <!-- 流れ -->
+                    <path d="M 40 100 L 260 100" stroke="#3498db" stroke-width="3" stroke-dasharray="10,5" opacity="0.5">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="1.5s" repeatCount="indefinite"/>
+                    </path>
+
+                    <text x="150" y="190" text-anchor="middle" fill="#2c3e50" font-size="11">音の速さの違いで流速を測定</text>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>超音波（人には聞こえない高い音）を斜めに発射します。流れに乗ると音が速く、逆らうと遅くなる性質を利用します。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>大口径の水道管、下水処理場、河川の流量測定、エアコンの冷媒流量</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>パイプの外から測定可</li>
+                            <li>圧力損失なし</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>気泡があると誤差</li>
+                            <li>設置に技術が必要</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 電磁流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">🧲</span> 電磁流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="50" y="70" width="200" height="60" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" rx="5"/>
+                    <rect x="55" y="75" width="190" height="50" fill="#bdc3c7"/>
+
+                    <!-- 磁石（上） -->
+                    <rect x="120" y="30" width="60" height="30" fill="#e74c3c" rx="5"/>
+                    <text x="150" y="50" text-anchor="middle" fill="white" font-size="14" font-weight="bold">N</text>
+
+                    <!-- 磁石（下） -->
+                    <rect x="120" y="140" width="60" height="30" fill="#3498db" rx="5"/>
+                    <text x="150" y="160" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
+
+                    <!-- 磁力線 -->
+                    <g stroke="#9b59b6" stroke-width="1" fill="none" opacity="0.5">
+                        <path d="M 130 60 Q 130 100, 130 140"/>
+                        <path d="M 150 60 Q 150 100, 150 140"/>
+                        <path d="M 170 60 Q 170 100, 170 140"/>
+                    </g>
+
+                    <!-- 電極 -->
+                    <circle cx="100" cy="100" r="8" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+                    <circle cx="200" cy="100" r="8" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+
+                    <!-- 電圧計 -->
+                    <path d="M 100 100 L 100 180 L 200 180 L 200 100" stroke="#e67e22" stroke-width="2" fill="none"/>
+                    <rect x="130" y="170" width="40" height="20" fill="#2c3e50" rx="3"/>
+                    <text x="150" y="183" text-anchor="middle" fill="white" font-size="10">電圧</text>
+
+                    <!-- 流れ -->
+                    <path d="M 60 100 L 240 100" stroke="#3498db" stroke-width="3" stroke-dasharray="10,5">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="1.5s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>理科で習う「電磁誘導」を使います。導電性の液体が磁場の中を流れると電圧が発生。この電圧の大きさで流速がわかります。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>上下水道、食品工場（牛乳、ジュース）、化学プラント、製紙工場</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>可動部品なし</li>
+                            <li>汚れた液体もOK</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>導電性液体のみ</li>
+                            <li>気体は測定不可</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 差圧式流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">📊</span> 差圧式流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="30" y="80" width="240" height="40" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+
+                    <!-- オリフィス（絞り） -->
+                    <rect x="140" y="70" width="20" height="60" fill="#34495e"/>
+                    <rect x="145" y="90" width="10" height="20" fill="#bdc3c7"/>
+
+                    <!-- 圧力測定点 -->
+                    <circle cx="100" cy="100" r="5" fill="#e74c3c"/>
+                    <circle cx="200" cy="100" r="5" fill="#3498db"/>
+
+                    <!-- 圧力計への配管 -->
+                    <path d="M 100 100 L 100 40" stroke="#e74c3c" stroke-width="2" fill="none"/>
+                    <path d="M 200 100 L 200 40" stroke="#3498db" stroke-width="2" fill="none"/>
+
+                    <!-- 差圧計 -->
+                    <rect x="80" y="20" width="140" height="30" fill="#2c3e50" rx="5"/>
+                    <path d="M 100 40 L 120 40" stroke="#e74c3c" stroke-width="2"/>
+                    <path d="M 200 40 L 180 40" stroke="#3498db" stroke-width="2"/>
+                    <text x="150" y="40" text-anchor="middle" fill="white" font-size="12">差圧計</text>
+
+                    <!-- 圧力表示 -->
+                    <text x="100" y="140" text-anchor="middle" fill="#e74c3c" font-size="10" font-weight="bold">高圧 P1</text>
+                    <text x="200" y="140" text-anchor="middle" fill="#3498db" font-size="10" font-weight="bold">低圧 P2</text>
+
+                    <!-- 流れ -->
+                    <path d="M 40 100 L 130 100" stroke="#3498db" stroke-width="3" stroke-dasharray="5,3">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-8" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M 145 100 L 155 100" stroke="#3498db" stroke-width="2" stroke-dasharray="2,2">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-4" dur="0.5s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M 170 100 L 260 100" stroke="#3498db" stroke-width="3" stroke-dasharray="5,3">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-8" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>パイプを狭くすると流速が上がり、圧力が下がります（ベルヌーイの定理）。この圧力差を測って流量を計算します。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>蒸気配管、ガスパイプライン、大型プラントの流量管理、空調システム</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>構造が簡単</li>
+                            <li>高温・高圧もOK</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>圧力損失が大きい</li>
+                            <li>直管部が必要</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 浮子式流量計 -->
+            <div class="flowmeter-card">
+                <h3><span class="icon">🎈</span> 浮子式流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- テーパー管 -->
+                    <path d="M 130 170 L 140 30 L 160 30 L 170 170 Z" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+
+                    <!-- 目盛り -->
+                    <g stroke="#7f8c8d" stroke-width="1">
+                        <line x1="140" y1="50" x2="135" y2="50"/>
+                        <line x1="140" y1="70" x2="135" y2="70"/>
+                        <line x1="140" y1="90" x2="135" y2="90"/>
+                        <line x1="140" y1="110" x2="135" y2="110"/>
+                        <line x1="140" y1="130" x2="135" y2="130"/>
+                        <line x1="140" y1="150" x2="135" y2="150"/>
+                    </g>
+
+                    <!-- 目盛り数値 -->
+                    <text x="125" y="55" text-anchor="end" fill="#2c3e50" font-size="10">100</text>
+                    <text x="125" y="95" text-anchor="end" fill="#2c3e50" font-size="10">60</text>
+                    <text x="125" y="135" text-anchor="end" fill="#2c3e50" font-size="10">20</text>
+
+                    <!-- 浮子 -->
+                    <ellipse cx="150" cy="100" rx="15" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2">
+                        <animate attributeName="cy" values="100;95;100" dur="2s" repeatCount="indefinite"/>
+                    </ellipse>
+
+                    <!-- 流れの矢印 -->
+                    <g stroke="#3498db" stroke-width="2" fill="#3498db">
+                        <path d="M 150 180 L 150 160 L 145 165 M 150 160 L 155 165"/>
+                        <text x="150" y="195" text-anchor="middle" font-size="12">流入</text>
+                    </g>
+
+                    <g stroke="#e74c3c" stroke-width="2" fill="#e74c3c">
+                        <path d="M 150 20 L 150 40 L 145 35 M 150 40 L 155 35" transform="rotate(180 150 30)"/>
+                        <text x="150" y="15" text-anchor="middle" font-size="12">流出</text>
+                    </g>
+
+                    <!-- ラベル -->
+                    <text x="200" y="100" fill="#2c3e50" font-size="11">浮子の位置で</text>
+                    <text x="200" y="115" fill="#2c3e50" font-size="11">流量を読む</text>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>上に向かって広がる管の中で、浮子が流れとバランスする位置で止まります。その高さで流量を読み取ります。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>実験室の流量調整、医療用ガス（酸素）の流量管理、小規模な薬品注入</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>電源不要</li>
+                            <li>直接目で確認</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>垂直設置が必須</li>
+                            <li>不透明流体は不可</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 蒸気流量計 -->
+            <div class="flowmeter-card" style="border-top: 4px solid #e74c3c;">
+                <h3><span class="icon">♨️</span> 蒸気流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- メインパイプ -->
+                    <rect x="30" y="80" width="240" height="40" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+
+                    <!-- 渦発生体 -->
+                    <rect x="140" y="70" width="20" height="60" fill="#2c3e50"/>
+
+                    <!-- 渦の表現 -->
+                    <g opacity="0.7">
+                        <circle cx="180" cy="90" r="8" fill="none" stroke="#e74c3c" stroke-width="2">
+                            <animateTransform attributeName="transform" type="rotate" from="0 180 90" to="360 180 90" dur="1s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="180" cy="110" r="8" fill="none" stroke="#3498db" stroke-width="2">
+                            <animateTransform attributeName="transform" type="rotate" from="0 180 110" to="-360 180 110" dur="1s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="200" cy="90" r="8" fill="none" stroke="#3498db" stroke-width="2">
+                            <animateTransform attributeName="transform" type="rotate" from="0 200 90" to="-360 200 90" dur="1.2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="200" cy="110" r="8" fill="none" stroke="#e74c3c" stroke-width="2">
+                            <animateTransform attributeName="transform" type="rotate" from="0 200 110" to="360 200 110" dur="1.2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+
+                    <!-- センサー -->
+                    <rect x="190" y="60" width="15" height="20" fill="#f39c12" rx="3"/>
+                    <text x="197" y="50" text-anchor="middle" fill="#2c3e50" font-size="10">センサー</text>
+
+                    <!-- 蒸気の流れ -->
+                    <g opacity="0.5">
+                        <path d="M 40 90 Q 50 85, 60 90 T 80 90" stroke="#fff" stroke-width="2" fill="none">
+                            <animate attributeName="d" values="M 40 90 Q 50 85, 60 90 T 80 90;M 40 90 Q 50 95, 60 90 T 80 90" dur="0.5s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 40 110 Q 50 115, 60 110 T 80 110" stroke="#fff" stroke-width="2" fill="none">
+                            <animate attributeName="d" values="M 40 110 Q 50 115, 60 110 T 80 110;M 40 110 Q 50 105, 60 110 T 80 110" dur="0.5s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+
+                    <!-- 温度・圧力補正 -->
+                    <rect x="100" y="130" width="100" height="25" fill="#34495e" rx="5"/>
+                    <text x="150" y="147" text-anchor="middle" fill="white" font-size="10">温度・圧力補正</text>
+
+                    <text x="150" y="180" text-anchor="middle" fill="#2c3e50" font-size="11" font-weight="bold">渦式（ボルテックス）</text>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>高温高圧の蒸気専用の流量計です。渦の発生頻度を測る方式や、オリフィス式に温度・圧力補正を加えた方式があります。蒸気は温度と圧力で密度が大きく変わるため、特別な補正が必要です。</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>発電所のボイラー、製紙工場の乾燥工程、食品工場の殺菌装置、病院の滅菌器、化学プラントの加熱プロセス</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>高温高圧に対応</li>
+                            <li>エネルギー管理に最適</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>設置コストが高い</li>
+                            <li>定期的な校正必要</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 熱式流量計 -->
+            <div class="flowmeter-card" style="border-top: 4px solid #f39c12;">
+                <h3><span class="icon">🌡️</span> 熱式流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- パイプ -->
+                    <rect x="30" y="70" width="240" height="60" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" rx="5"/>
+                    <rect x="35" y="75" width="230" height="50" fill="#bdc3c7"/>
+
+                    <!-- ヒーター素子 -->
+                    <rect x="120" y="90" width="8" height="20" fill="#e74c3c" rx="2"/>
+                    <g opacity="0.6">
+                        <circle cx="124" cy="100" r="15" fill="none" stroke="#e74c3c" stroke-width="1">
+                            <animate attributeName="r" from="10" to="20" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <text x="124" y="65" text-anchor="middle" fill="#e74c3c" font-size="10" font-weight="bold">加熱</text>
+
+                    <!-- 温度センサー -->
+                    <rect x="170" y="90" width="8" height="20" fill="#3498db" rx="2"/>
+                    <text x="174" y="65" text-anchor="middle" fill="#3498db" font-size="10" font-weight="bold">測温</text>
+
+                    <!-- 熱の移動を表現 -->
+                    <path d="M 130 100 Q 150 95, 170 100" stroke="#f39c12" stroke-width="2" stroke-dasharray="3,2" opacity="0.7">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-5" dur="1s" repeatCount="indefinite"/>
+                    </path>
+
+                    <!-- 流れ -->
+                    <g stroke="#3498db" stroke-width="2" fill="none" opacity="0.5">
+                        <path d="M 50 90 L 250 90" stroke-dasharray="10,5">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 50 110 L 250 110" stroke-dasharray="10,5">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+
+                    <!-- 制御ユニット -->
+                    <rect x="100" y="140" width="100" height="30" fill="#2c3e50" rx="5"/>
+                    <text x="150" y="158" text-anchor="middle" fill="white" font-size="11">熱量から流量計算</text>
+
+                    <!-- 接続線 -->
+                    <path d="M 124 110 L 124 140" stroke="#e74c3c" stroke-width="1"/>
+                    <path d="M 174 110 L 174 140" stroke="#3498db" stroke-width="1"/>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>センサーを電気で温めて、流体がその熱を奪う量を測定します。流れが速いほど多くの熱が奪われます。体感温度と同じ原理で、風が強いと寒く感じるのと同じです！</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>半導体工場のクリーンルーム、自動車のエンジン吸入空気量、ガス分析装置、微小流量の測定、換気システムの風量管理</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>微小流量も測定可能</li>
+                            <li>気体測定に最適</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>汚れに弱い</li>
+                            <li>ガス種類で校正必要</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. コリオリ式流量計 -->
+            <div class="flowmeter-card" style="border-top: 4px solid #9b59b6;">
+                <h3><span class="icon">🔄</span> コリオリ式流量計</h3>
+                <svg class="illustration-svg" viewBox="0 0 300 200">
+                    <!-- 入口・出口パイプ -->
+                    <rect x="20" y="90" width="50" height="20" fill="#95a5a6"/>
+                    <rect x="230" y="90" width="50" height="20" fill="#95a5a6"/>
+
+                    <!-- U字管 -->
+                    <path d="M 70 100 Q 70 40, 100 40 L 200 40 Q 230 40, 230 100" 
+                          fill="none" stroke="#3498db" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M 70 100 Q 70 160, 100 160 L 200 160 Q 230 160, 230 100" 
+                          fill="none" stroke="#3498db" stroke-width="8" stroke-linecap="round"/>
+
+                    <!-- 振動を表現 -->
+                    <g>
+                        <path d="M 70 100 Q 70 40, 100 40 L 200 40 Q 230 40, 230 100" 
+                              fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" opacity="0.5">
+                            <animate attributeName="d" 
+                                     values="M 70 100 Q 70 40, 100 40 L 200 40 Q 230 40, 230 100;
+                                             M 70 100 Q 70 35, 100 35 L 200 35 Q 230 35, 230 100;
+                                             M 70 100 Q 70 40, 100 40 L 200 40 Q 230 40, 230 100"
+                                     dur="1s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 70 100 Q 70 160, 100 160 L 200 160 Q 230 160, 230 100" 
+                              fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" opacity="0.5">
+                            <animate attributeName="d" 
+                                     values="M 70 100 Q 70 160, 100 160 L 200 160 Q 230 160, 230 100;
+                                             M 70 100 Q 70 165, 100 165 L 200 165 Q 230 165, 230 100;
+                                             M 70 100 Q 70 160, 100 160 L 200 160 Q 230 160, 230 100"
+                                     dur="1s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+
+                    <!-- 振動発生器 -->
+                    <rect x="145" y="95" width="10" height="10" fill="#f39c12"/>
+                    <text x="150" y="120" text-anchor="middle" fill="#2c3e50" font-size="9">振動発生器</text>
+
+                    <!-- センサー -->
+                    <circle cx="100" cy="40" r="5" fill="#27ae60"/>
+                    <circle cx="200" cy="40" r="5" fill="#27ae60"/>
+                    <circle cx="100" cy="160" r="5" fill="#27ae60"/>
+                    <circle cx="200" cy="160" r="5" fill="#27ae60"/>
+
+                    <!-- ラベル -->
+                    <text x="150" y="185" text-anchor="middle" fill="#2c3e50" font-size="11" font-weight="bold">ねじれの位相差を検出</text>
+
+                    <!-- 流れの方向 -->
+                    <path d="M 30 100 L 50 100 L 45 95 M 50 100 L 45 105" stroke="#2c3e50" stroke-width="2" fill="none"/>
+                    <path d="M 250 100 L 270 100 L 265 95 M 270 100 L 265 105" stroke="#2c3e50" stroke-width="2" fill="none"/>
+                </svg>
+                <div class="principle">
+                    <h4>🔧 どうやって測るの？</h4>
+                    <p>U字管を振動させると、流体が流れているときコリオリの力でねじれが生じます。このねじれの大きさから質量流量を直接測定できます。地球の自転で台風が渦を巻くのと同じ力を利用しています！</p>
+                </div>
+                <div class="usage-example">
+                    <h4>🎯 使用例</h4>
+                    <p>高精度が必要な薬品の調合、石油製品の取引、食品の原料配合、天然ガスの課金用測定、研究開発での精密測定</p>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h5>👍 良いところ</h5>
+                        <ul>
+                            <li>超高精度（±0.1%）</li>
+                            <li>密度も同時測定</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h5>⚠️ 苦手なところ</h5>
+                        <ul>
+                            <li>価格が非常に高い</li>
+                            <li>振動に敏感</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 比較表 -->
+        <div class="comparison-table">
+            <h2>📊 流量計の比較表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>種類</th>
+                        <th>測定原理</th>
+                        <th>精度</th>
+                        <th>価格</th>
+                        <th>最適な用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>⚙️ 容積式</td>
+                        <td>体積を直接計測</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>中</td>
+                        <td>水道メーター、燃料計測</td>
+                    </tr>
+                    <tr>
+                        <td>🌀 タービン式</td>
+                        <td>回転数測定</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>中</td>
+                        <td>石油、清浄な液体</td>
+                    </tr>
+                    <tr>
+                        <td>🔊 超音波式</td>
+                        <td>音速の変化</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>高</td>
+                        <td>大口径配管、非接触測定</td>
+                    </tr>
+                    <tr>
+                        <td>🧲 電磁式</td>
+                        <td>電磁誘導</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>高</td>
+                        <td>導電性液体、汚水</td>
+                    </tr>
+                    <tr>
+                        <td>📊 差圧式</td>
+                        <td>圧力差測定</td>
+                        <td>⭐⭐⭐</td>
+                        <td>低</td>
+                        <td>気体、蒸気</td>
+                    </tr>
+                    <tr>
+                        <td>🎈 浮子式</td>
+                        <td>浮子の位置</td>
+                        <td>⭐⭐⭐</td>
+                        <td>低</td>
+                        <td>小流量、目視確認</td>
+                    </tr>
+                    <tr>
+                        <td>♨️ 蒸気用</td>
+                        <td>渦・差圧＋補正</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>高</td>
+                        <td>ボイラー、蒸気配管</td>
+                    </tr>
+                    <tr>
+                        <td>🌡️ 熱式</td>
+                        <td>熱伝達量</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>中〜高</td>
+                        <td>気体、微小流量</td>
+                    </tr>
+                    <tr>
+                        <td>🔄 コリオリ式</td>
+                        <td>コリオリ力</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>最高</td>
+                        <td>高精度取引、研究開発</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="think-section">
+            <h2>🤔 考えてみよう！</h2>
+            <div class="question">
+                <p><strong>Q1:</strong> 学校のプールに水を入れるとき、どの流量計が最適でしょうか？その理由も考えてみましょう。</p>
+            </div>
+            <div class="question">
+                <p><strong>Q2:</strong> 牛乳工場で、パックに正確に1リットルずつ入れたい場合、どの流量計を選びますか？</p>
+            </div>
+            <div class="question">
+                <p><strong>Q3:</strong> 火力発電所で蒸気の量を測りたいとき、なぜ普通の流量計では難しいのでしょうか？</p>
+            </div>
+            <div class="question">
+                <p><strong>Q4:</strong> 病院の酸素ボンベから患者さんへの酸素供給量を調整するには、どの流量計が安全で使いやすいでしょうか？</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 10px;">
+            <h3 style="color: #2c3e50;">🎓 まとめ</h3>
+            <p style="color: #34495e; line-height: 1.8;">
+                流量計にはたくさんの種類があり、それぞれに得意な分野があります。<br>
+                水道のような身近なものから、最先端の工場まで、私たちの生活を支えています。<br>
+                将来、エンジニアを目指す人は、これらの知識がきっと役に立ちますよ！
+            </p>
+        </div>
+    </div>
+</body>
+</html>

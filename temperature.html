@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温度計測のしくみ - 中学生向け解説</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .intro-section h2 {
+            color: #d63031;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .intro-section h2::before {
+            content: "🌡️";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .why-measure {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .why-measure h3 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .example-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .example-item {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .example-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .example-item .icon {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .thermometer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .thermometer-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .thermometer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .card-header.liquid { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .card-header.thermocouple { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .card-header.rtd { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .card-header.thermistor { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .card-header.radiation { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .card-header.bimetal { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .principle {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .principle h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .usage-examples {
+            margin: 15px 0;
+        }
+
+        .usage-examples h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .usage-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .usage-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .usage-list li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .pros {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .cons {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .pros h5, .cons h5 {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .pros h5 { color: #155724; }
+        .cons h5 { color: #721c24; }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.9em;
+        }
+
+        .pros li::before {
+            content: "👍 ";
+        }
+
+        .cons li::before {
+            content: "⚠️ ";
+        }
+
+        .temperature-range {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d63031;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .summary-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .summary-content {
+            background: rgba(255,255,255,0.9);
+            color: #2d3436;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: yellow;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .thermometer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌡️ 温度計測のしくみを学ぼう！</h1>
+            <p class="subtitle">工業計器で温度を測る方法 - 中学生向けやさしい解説</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-section">
+                <h2>温度を測るってどういうこと？</h2>
+                <p>
+                    温度は私たちの生活のあらゆる場面で重要な役割を果たしています。
+                    でも、<span class="highlight">温度は目に見えません</span>。だから、特別な道具（温度計）を使って測る必要があるのです。
+                </p>
+
+                <div class="why-measure">
+                    <h3>🤔 なぜ温度を測る必要があるの？</h3>
+                    <div class="example-list">
+                        <div class="example-item">
+                            <div class="icon">🏥</div>
+                            <strong>健康管理</strong>
+                            <p>体温を測って健康状態をチェック</p>
+                        </div>
+                        <div class="example-item">
+                            <div class="icon">🍳</div>
+                            <strong>料理</strong>
+                            <p>適切な温度で美味しく調理</p>
+                        </div>
+                        <div class="example-item">
+                            <div class="icon">🏭</div>
+                            <strong>工場</strong>
+                            <p>製品の品質を保つため</p>
+                        </div>
+                        <div class="example-item">
+                            <div class="icon">🌡️</div>
+                            <strong>天気予報</strong>
+                            <p>気温を測って天気を予測</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-measure" style="margin-top: 20px;">
+                    <h3>💡 温度計の基本的な考え方</h3>
+                    <p>
+                        温度計は<span class="highlight">「温度によって変化する物質の性質」</span>を利用しています。
+                        例えば、温度が上がると：
+                    </p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>📏 物質が膨張する（大きくなる）</li>
+                        <li>⚡ 電気の流れやすさが変わる</li>
+                        <li>🔥 放出される光や熱の量が変わる</li>
+                    </ul>
+                    <p style="margin-top: 10px;">
+                        これらの変化を測ることで、温度を知ることができるのです！
+                    </p>
+                </div>
+            </div>
+
+            <h2 style="text-align: center; color: #2d3436; margin: 30px 0; font-size: 1.8em;">
+                📊 いろいろな温度計の種類
+            </h2>
+
+            <div class="thermometer-grid">
+                <!-- 液体温度計 -->
+                <div class="thermometer-card">
+                    <div class="card-header liquid">
+                        🌡️ 液体温度計（水銀・アルコール温度計）
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                液体は温度が上がると<strong>膨張（ぼうちょう）</strong>します。
+                                細いガラス管の中の液体が、温度によって上下することを利用しています。
+                                理科室でよく見る赤い液体（アルコール）や銀色の液体（水銀）の温度計がこれです！
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>理科の実験室</li>
+                                <li>体温計（昔のタイプ）</li>
+                                <li>室温計</li>
+                                <li>お風呂の温度計</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>電池不要</li>
+                                    <li>見やすい</li>
+                                    <li>安い</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>割れやすい</li>
+                                    <li>読み取りに時間がかかる</li>
+                                    <li>水銀は危険</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-50℃ ～ 300℃
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 熱電対 -->
+                <div class="thermometer-card">
+                    <div class="card-header thermocouple">
+                        ⚡ 熱電対（ねつでんつい）
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                2種類の違う金属をつなげて、その接点を加熱すると<strong>電気が発生</strong>します。
+                                この電気の強さが温度によって変わることを利用しています。
+                                とても高い温度も測れるスゴイやつです！
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>製鉄所の溶鉱炉</li>
+                                <li>ジェットエンジン</li>
+                                <li>工場の焼却炉</li>
+                                <li>ガスコンロの安全装置</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>超高温OK（2000℃以上も！）</li>
+                                    <li>反応が速い</li>
+                                    <li>丈夫で長持ち</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>精度はそこそこ</li>
+                                    <li>基準温度が必要</li>
+                                    <li>配線が必要</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-200℃ ～ 2300℃
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 測温抵抗体 -->
+                <div class="thermometer-card">
+                    <div class="card-header rtd">
+                        🔌 測温抵抗体（RTD）
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                金属（主に白金）は温度が上がると<strong>電気抵抗</strong>が大きくなります。
+                                つまり、電気が流れにくくなるんです。この性質を使って、
+                                電気の流れやすさから温度を正確に測ることができます。
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>研究室の精密測定</li>
+                                <li>医薬品工場</li>
+                                <li>食品工場の品質管理</li>
+                                <li>半導体製造装置</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>とても正確</li>
+                                    <li>安定している</li>
+                                    <li>繰り返し精度が高い</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>高価</li>
+                                    <li>衝撃に弱い</li>
+                                    <li>高温には向かない</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-200℃ ～ 850℃
+                        </div>
+                    </div>
+                </div>
+
+                <!-- サーミスタ -->
+                <div class="thermometer-card">
+                    <div class="card-header thermistor">
+                        💎 サーミスタ
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                特殊な<strong>半導体（セラミック）</strong>を使った温度計です。
+                                温度が変わると電気抵抗が大きく変化します。
+                                小さくて反応が速いので、身の回りの電子機器にたくさん使われています！
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>エアコンの温度センサー</li>
+                                <li>電子体温計</li>
+                                <li>パソコンのCPU温度監視</li>
+                                <li>冷蔵庫の温度管理</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>小型で安い</li>
+                                    <li>反応がとても速い</li>
+                                    <li>感度が高い</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>測定範囲が狭い</li>
+                                    <li>経年変化がある</li>
+                                    <li>校正が必要</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-50℃ ～ 150℃
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 放射温度計 -->
+                <div class="thermometer-card">
+                    <div class="card-header radiation">
+                        🔥 放射温度計（赤外線温度計）
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                すべての物体は温度に応じて<strong>赤外線</strong>を出しています。
+                                この見えない光を検出して温度を測ります。
+                                触らなくても温度が分かる、まるで魔法のような温度計です！
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>おでこで測る体温計</li>
+                                <li>料理の表面温度測定</li>
+                                <li>工場の高温物体の監視</li>
+                                <li>建物の断熱診断</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>触れずに測れる</li>
+                                    <li>瞬時に測定</li>
+                                    <li>動いているものもOK</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>表面温度のみ</li>
+                                    <li>材質で誤差が出る</li>
+                                    <li>透明なものは測れない</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-50℃ ～ 3000℃
+                        </div>
+                    </div>
+                </div>
+
+                <!-- バイメタル温度計 -->
+                <div class="thermometer-card">
+                    <div class="card-header bimetal">
+                        🔧 バイメタル温度計
+                    </div>
+                    <div class="card-body">
+                        <div class="principle">
+                            <h4>📖 どうやって温度を測るの？</h4>
+                            <p>
+                                2種類の金属板を貼り合わせたものを使います。
+                                温度が変わると、それぞれの金属の<strong>膨張率の違い</strong>で曲がります。
+                                この曲がり具合で温度が分かる、シンプルだけど賢い仕組みです！
+                            </p>
+                        </div>
+
+                        <div class="usage-examples">
+                            <h4>🎯 どんなところで使われている？</h4>
+                            <ul class="usage-list">
+                                <li>オーブンの温度計</li>
+                                <li>自動車の水温計</li>
+                                <li>温度スイッチ（サーモスタット）</li>
+                                <li>工業用の温度指示計</li>
+                            </ul>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>良いところ</h5>
+                                <ul>
+                                    <li>電源不要</li>
+                                    <li>とても丈夫</li>
+                                    <li>安くて簡単</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>注意点</h5>
+                                <ul>
+                                    <li>精度は低め</li>
+                                    <li>反応が遅い</li>
+                                    <li>振動に弱い</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="temperature-range">
+                            測定範囲：-50℃ ～ 500℃
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h2>🎓 まとめ</h2>
+                <div class="summary-content">
+                    <p>
+                        温度計にはたくさんの種類があり、それぞれに<span class="highlight">得意なこと</span>と
+                        <span class="highlight">苦手なこと</span>があります。
+                    </p>
+                    <p style="margin-top: 15px;">
+                        <strong>📌 覚えておきたいポイント：</strong>
+                    </p>
+                    <ul style="text-align: left; margin: 15px 20px;">
+                        <li>🎯 <strong>用途に合わせて選ぶ</strong>：高温なら熱電対、精密測定ならRTD</li>
+                        <li>⚡ <strong>反応速度</strong>：速い測定が必要ならサーミスタや放射温度計</li>
+                        <li>💰 <strong>コスト</strong>：予算に応じて液体温度計やバイメタルも選択肢</li>
+                        <li>🔧 <strong>メンテナンス</strong>：電源不要で丈夫なものか、精密だけど扱いに注意が必要か</li>
+                    </ul>
+                    <p style="margin-top: 15px;">
+                        温度計測は私たちの生活を支える大切な技術です。
+                        身の回りにある温度計を見つけて、どんな種類か考えてみましょう！
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🌡️ 温度計測の世界へようこそ！ 🌡️</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">© 2024 中学生向け工業計器解説</p>
+        </footer>
+    </div>
+</body>
+</html>

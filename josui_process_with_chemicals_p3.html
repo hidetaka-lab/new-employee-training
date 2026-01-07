@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>浄水場プロセスと薬品注入（水道法基準付き）</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; margin: 24px; }
+    h1, h2, h3 { color: #1b4b72; }
+    h1 { border-bottom: 3px solid #1b4b72; padding-bottom: 8px; }
+    h2 { border-left: 6px solid #1b4b72; padding-left: 8px; margin-top: 32px; }
+    section { margin-bottom: 32px; }
+    .process-flow { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .step-box { border: 1px solid #ccc; border-radius: 4px; padding: 8px 12px; background: #f8fbff; }
+    .arrow { align-self: center; font-size: 20px; }
+    figure { border: 1px solid #ddd; padding: 8px; border-radius: 4px; background: #fafafa; max-width: 100%; margin: 16px 0; }
+    figure img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+    figure figcaption { font-size: 0.9em; color: #555; margin-top: 4px; }
+    .point { background: #fff6d5; border-left: 4px solid #f2b01e; padding: 8px 12px; margin: 8px 0; }
+    .keyword { font-weight: bold; color: #c0392b; }
+    ul { margin-top: 4px; }
+    .table-like { border-collapse: collapse; width: 100%; max-width: 960px; }
+    .table-like th, .table-like td { border: 1px solid #ccc; padding: 6px 8px; }
+    .table-like th { background: #f0f4f8; }
+    .small { font-size: 0.9em; color: #555; }
+    .footer { margin-top: 40px; font-size: 0.85em; color: #555; border-top: 1px solid #ddd; padding-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>浄水場プロセスと薬品注入（水道法基準付き）</h1>
+  <p>
+    本資料では、浄水場における<strong>取水 → 着水井 → 沈殿 → ろ過 → 消毒 → 配水</strong>のプロセスについて、
+    社会人1年目向けにわかりやすく説明します。図や写真は、Bulletin 53W01A04-01（BU53W01A04-01.pdf）の
+    プロセス図および設備写真を使用する想定でレイアウトしています。
+  </p>
+
+  <section>
+    <h2>1. 浄水場 全体フローと上水道施設全体像</h2>
+
+    <figure>
+      <img src="BU53W01A04-01_p3_waterworks_overview.png" alt="BU53W01A04-01 pdf3枚目の上水道施設全体像" />
+      <figcaption>
+        上水道施設全体像（BU53W01A04-01.pdf 3ページ掲載の図を想定）
+      </figcaption>
+    </figure>
+
+    <p>
+      上水道施設全体像の図では、<strong>取水施設・浄水場構内・配水池・配水管網</strong>が一枚で示されており、
+      各設備間の関係や水の流れを俯瞰できます。
+    </p>
+
+    <div class="process-flow">
+      <div class="step-box">取水（河川・ダム・湖沼）</div>
+      <div class="arrow">→</div>
+      <div class="step-box">沈砂池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">着水井</div>
+      <div class="arrow">→</div>
+      <div class="step-box">薬品混和池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">フロック形成池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">沈殿池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">急速ろ過池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">塩素混和池（消毒）</div>
+      <div class="arrow">→</div>
+      <div class="step-box">浄水池・配水池</div>
+      <div class="arrow">→</div>
+      <div class="step-box">配水（各需要家へ）</div>
+    </div>
+
+    <figure>
+      <img src="BU53W01A04-01_process_overview.png" alt="BU53W01A04-01に掲載の上水プロセスフロー図" />
+      <figcaption>
+        上水プロセスフローと水質計・薬品注入点の概要
+        （BU53W01A04-01.pdf に掲載のプロセス図を想定して貼付）
+      </figcaption>
+    </figure>
+
+    <div class="point">
+      <span class="keyword">ポイント</span>：原水から浄水への流れの中で、<strong>どの工程で何を取り除き、どの水質を測るか</strong>を意識します。
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 取水・沈砂池・着水井</h2>
+    <h3>2-1 取水・沈砂池</h3>
+    <p>
+      河川・湖沼・ダムから<strong>原水</strong>を取り込み、沈砂池で砂や粗大な懸濁物を沈めます。
+    </p>
+    <figure>
+      <img src="BU53W01A04-01_intake_sandbasin.jpg" alt="BU53W01A04-01に掲載の取水設備・沈砂池の写真" />
+      <figcaption>取水設備・沈砂池の写真（BU53W01A04-01.pdf 掲載の写真を想定）</figcaption>
+    </figure>
+    <table class="table-like">
+      <tr><th>主な目的</th><td>浄水場に原水を導き、大きなごみ・砂などを除去する。</td></tr>
+      <tr><th>代表的な計測</th><td>水位、流量、濁度、電気伝導率（導電率）、油分監視 など</td></tr>
+      <tr><th>関連機器（BU53W01A04-01より）</th><td>微量水中油分モニタ QS1000、pH計 PH8EFP、導電率計 SC210G など</td></tr>
+    </table>
+
+    <h3>2-2 着水井</h3>
+    <p>
+      取水・沈砂池を通過した水は<strong>着水井</strong>に入り、水位を安定させて後段の薬品混和池・沈殿池へ送ります。
+    </p>
+    <figure>
+      <img src="BU53W01A04-01_chakusui.jpg" alt="BU53W01A04-01に掲載の着水井周辺写真" />
+      <figcaption>着水井および周辺設備（BU53W01A04-01.pdf 掲載の写真を想定）</figcaption>
+    </figure>
+    <table class="table-like">
+      <tr><th>主な目的</th><td>水位・流量を調整し、原水水質をオンラインで監視する。</td></tr>
+      <tr><th>代表的な計測</th><td>水位、流量、濁度、pH、導電率 など</td></tr>
+      <tr><th>関連機器（BU53W01A04-01より）</th><td>表面散乱形濁度計 TB830D、透過散乱形濁度計 TB810D、pH計 PH8EFP、導電率計 SC210G</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 薬品混和池・フロック形成池・沈殿池</h2>
+    <h3>3-1 薬品の種類</h3>
+    <p>BU53W01A04-01 では、薬品注入設備として次の薬品が示されています。</p>
+    <table class="table-like">
+      <tr><th>薬品</th><th>主な目的</th><th>注入箇所の例</th></tr>
+      <tr>
+        <td>粉末活性炭</td>
+        <td>臭気・有機物の吸着除去（カビ臭、異臭味対策など）</td>
+        <td>着水井、薬品混和池 など</td>
+      </tr>
+      <tr>
+        <td>次亜塩素酸ナトリウム等（「次亜塩素」）</td>
+        <td>前塩素処理（藻類・細菌抑制）、最終消毒</td>
+        <td>着水井、フロック形成池前、塩素混和池 など</td>
+      </tr>
+      <tr>
+        <td>pH調整剤（苛性ソーダ等）</td>
+        <td>pHを最適範囲に調整（凝集効率向上、配管腐食抑制）</td>
+        <td>薬品混和池 など</td>
+      </tr>
+      <tr>
+        <td>凝集剤（ポリ塩化アルミニウム等）</td>
+        <td>汚れをフロック化して沈殿・ろ過しやすくする</td>
+        <td>薬品混和池、フロック形成池</td>
+      </tr>
+    </table>
+
+    <h3>3-2 薬品注入と測定すべきプロセス値</h3>
+    <table class="table-like">
+      <tr>
+        <th>薬品</th>
+        <th>主な制御・監視指標<br class="small" />(プロセス値)</th>
+        <th>代表的な水道法基準・目標値</th>
+      </tr>
+      <tr>
+        <td>粉末活性炭</td>
+        <td>
+          ・臭気（官能検査）<br />
+          ・有機物（TOC 等）<br />
+          ・濁度、色度
+        </td>
+        <td>
+          ・臭気：<strong>異常でないこと</strong><br />
+          ・味：<strong>異常でないこと</strong><br />
+          ・色度：<strong>5度以下</strong>（水道法水質基準）<br />
+          ・濁度：<strong>2度以下</strong>（水道法水質基準）
+        </td>
+      </tr>
+      <tr>
+        <td>次亜塩素酸ナトリウム等（次亜塩素）</td>
+        <td>
+          ・残留塩素（遊離/結合）<br />
+          ・アンモニア性窒素<br />
+          ・有機物（消毒副生成物対策）
+        </td>
+        <td>
+          ・残留塩素（基準）：<strong>1mg/L以下</strong>（水道法水質基準）<br />
+          ・残留塩素（蛇口での下限）：<strong>0.1mg/L以上</strong><br />
+          &nbsp;&nbsp;※水道法施行規則等により、給水栓で0.1mg/L以上保持することが求められる。
+        </td>
+      </tr>
+      <tr>
+        <td>pH調整剤</td>
+        <td>
+          ・pH値<br />
+          ・アルカリ度<br />
+          ・電気伝導率
+        </td>
+        <td>
+          ・pH値：<strong>5.8以上 8.6以下</strong>（水道法水質基準）<br />
+          ・アルカリ度：配水管腐食防止等の観点で目標設定（例：20～100 mg/Lとして管理）
+        </td>
+      </tr>
+      <tr>
+        <td>凝集剤</td>
+        <td>
+          ・濁度（薬注前後、沈殿池出口）<br />
+          ・pH値（凝集の最適pH）<br />
+          ・フロック状態（目視）
+        </td>
+        <td>
+          ・濁度：<strong>2度以下</strong>（水道法水質基準）<br />
+          ・pH値：<strong>5.8以上 8.6以下</strong>（水道法水質基準）
+        </td>
+      </tr>
+    </table>
+
+    <div class="point">
+      <span class="keyword">BU53W01A04-01 との対応</span>：図中の「薬品注入設備（粉末活性炭・次亜塩素・pH調整剤・凝集剤）」と、
+      「濁度・pH・導電率・残留塩素」などの測定点を対応づけて理解すると、配線図・I/O設計のイメージがつかみやすくなります。
+    </div>
+  </section>
+
+  <section>
+    <h2>4. ろ過・塩素混和池・浄水池〜配水</h2>
+    <h3>4-1 急速ろ過池</h3>
+    <p>
+      沈殿池を出た水は、急速ろ過池で砂や活性炭層を通過し、細かな濁りを除去します。
+    </p>
+    <figure>
+      <img src="BU53W01A04-01_filter.jpg" alt="BU53W01A04-01に掲載の急速ろ過池写真" />
+      <figcaption>急速ろ過池（BU53W01A04-01.pdf 掲載の写真・図を想定）</figcaption>
+    </figure>
+    <table class="table-like">
+      <tr><th>主な目的</th><td>沈殿で取り切れない微細な懸濁物を除去し、水を透明にする。</td></tr>
+      <tr><th>代表的な計測</th><td>ろ過池流入・流出の濁度、差圧、流量 など</td></tr>
+      <tr><th>関連機器（BU53W01A04-01より）</th><td>高感度透過散乱形濁度計 TB800D（ろ過池用）</td></tr>
+      <tr><th>水道法との関係</th><td>浄水の濁度が<strong>2度以下</strong>となるよう、ろ過性能を確保する。</td></tr>
+    </table>
+
+    <h3>4-2 塩素混和池・浄水池</h3>
+    <p>
+      ろ過した水に最終的な塩素消毒を行い、浄水池・配水池に貯めてから配水します。
+    </p>
+    <figure>
+      <img src="BU53W01A04-01_chlorine_tank.jpg" alt="BU53W01A04-01に掲載の塩素混和池・浄水池写真" />
+      <figcaption>塩素混和池・浄水池（BU53W01A04-01.pdf 掲載の写真・図を想定）</figcaption>
+    </figure>
+    <table class="table-like">
+      <tr><th>主な目的</th><td>病原性微生物を不活化し、配水末端まで残留塩素を保持する。</td></tr>
+      <tr><th>代表的な計測</th><td>残留塩素、濁度、pH、色度 など</td></tr>
+      <tr><th>関連機器（BU53W01A04-01より）</th><td>自動水質監視装置 WM400（配水池）、残留塩素計 など</td></tr>
+      <tr>
+        <th>水道法との関係</th>
+        <td>
+          ・残留塩素：<strong>1mg/L以下</strong>（水道法水質基準）<br />
+          ・残留塩素（蛇口）：<strong>0.1mg/L以上</strong>保持（水道法施行規則等）<br />
+          ・pH値：<strong>5.8以上 8.6以下</strong><br />
+          ・濁度：<strong>2度以下</strong>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>5. 工程別の薬品・計測値・水道法基準の整理</h2>
+    <table class="table-like">
+      <tr>
+        <th>工程</th>
+        <th>主な薬品</th>
+        <th>主な計測値</th>
+        <th>関連する水道法基準</th>
+      </tr>
+      <tr>
+        <td>取水〜沈砂池〜着水井</td>
+        <td>（必要に応じて）粉末活性炭、前塩素</td>
+        <td>濁度、pH、導電率、油分、臭気 など</td>
+        <td>
+          ・濁度：2度以下<br />
+          ・色度：5度以下<br />
+          ・pH：5.8〜8.6
+        </td>
+      </tr>
+      <tr>
+        <td>薬品混和池〜フロック形成池〜沈殿池</td>
+        <td>凝集剤、pH調整剤、粉末活性炭、前塩素</td>
+        <td>濁度（薬注前後）、pH、アルカリ度、温度</td>
+        <td>
+          ・最終的に濁度2度以下、pH5.8〜8.6を満たすように設計・運転
+        </td>
+      </tr>
+      <tr>
+        <td>急速ろ過池</td>
+        <td>（必要に応じて）中間塩素、粉末活性炭</td>
+        <td>ろ過出口濁度、差圧、流量</td>
+        <td>
+          ・浄水濁度：2度以下（多くの事業体で1度以下を目標）
+        </td>
+      </tr>
+      <tr>
+        <td>塩素混和池〜浄水池〜配水池</td>
+        <td>次亜塩素酸ナトリウム等</td>
+        <td>残留塩素、濁度、pH、色度</td>
+        <td>
+          ・残留塩素：1mg/L以下（基準）、0.1mg/L以上（蛇口）<br />
+          ・pH：5.8〜8.6<br />
+          ・濁度：2度以下
+        </td>
+      </tr>
+    </table>
+
+    <div class="point">
+      <span class="keyword">新人向けの着眼点</span>：
+      <ul>
+        <li>pdf3枚目の<strong>上水道施設全体像</strong>と、本資料の工程別説明を見比べて、設備間のつながりをイメージしてください。</li>
+        <li>プロセス図（BU53W01A04-01）の中で、各池の<strong>薬品注入点</strong>と<strong>pH・濁度・導電率・残留塩素計の設置点</strong>をトレースすると、I/Oリストとの対応が見えてきます。</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer">
+    図・写真出典：Bulletin 53W01A04-01（BU53W01A04-01.pdf, YOKOGAWA 上下水道ソリューション資料）を想定。<br />
+    水質基準値出典：環境省・厚生労働省資料（水道法、水道法施行規則、水質基準に関する省令 等）。<br />
+    本資料は、社内教育用（社会人1年目向け）として作成したサンプルです。実務で使用する際は、最新の法令・自治体基準を必ず確認してください。
+  </div>
+</body>
+</html>

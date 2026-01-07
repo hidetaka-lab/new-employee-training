@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>計装信号のデジタル信号入門</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            position: relative;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #e8f4ff;
+            transition: background 0.3s;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+            border-color: #667eea;
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .example-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .protocol-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .protocol-card h4 {
+            color: #d84315;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .advantage-list, .disadvantage-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .advantage-list li, .disadvantage-list li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+        }
+
+        .advantage-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .disadvantage-list li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #f44336;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .signal-format {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .signal-format h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .binary-example {
+            background: #263238;
+            color: #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .tips-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .tips-box h3 {
+            color: #5e35b1;
+            margin-bottom: 15px;
+        }
+
+        .tips-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-box li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .tips-box li:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .summary-section h2 {
+            color: white;
+            border-bottom: 3px solid white;
+        }
+
+        footer {
+            background: #37474f;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 計装信号のデジタル信号入門</h1>
+            <p class="subtitle">社会人1年生のための基礎知識ガイド</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-box">
+                <h2 style="border: none; color: #333;">はじめに</h2>
+                <p>
+                    工場やプラントで使われる計装システムでは、温度・圧力・流量などの情報を
+                    <span class="highlight">デジタル信号</span>として扱うことが増えています。
+                    この資料では、デジタル信号の基本から実際の使用例まで、分かりやすく解説します。
+                </p>
+            </div>
+
+            <section>
+                <h2>1. デジタル信号とは？</h2>
+                <p>
+                    デジタル信号は、情報を<strong>0と1の組み合わせ</strong>で表現する信号です。
+                    アナログ信号が連続的な値を取るのに対し、デジタル信号は離散的な値を取ります。
+                </p>
+
+                <div class="binary-example">
+                    温度 25.3℃ → 0001 1001 0011 (2進数表現)
+                </div>
+
+                <h3>アナログ信号との違い</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>アナログ信号</th>
+                            <th>デジタル信号</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>信号の形態</strong></td>
+                            <td>連続的な電圧・電流（4-20mA等）</td>
+                            <td>0と1のパルス列</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ノイズ耐性</strong></td>
+                            <td>弱い（ノイズが直接影響）</td>
+                            <td>強い（エラー訂正可能）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>伝送距離</strong></td>
+                            <td>短い（数百メートル）</td>
+                            <td>長い（数キロメートル可能）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>情報量</strong></td>
+                            <td>1つの値のみ</td>
+                            <td>複数の情報を同時伝送可能</td>
+                        </tr>
+                        <tr>
+                            <td><strong>配線</strong></td>
+                            <td>1信号につき1本必要</td>
+                            <td>複数信号を1本で伝送可能</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>2. デジタル信号の特徴とメリット</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🛡️ 高いノイズ耐性</h4>
+                        <p>0と1の判別だけなので、多少のノイズがあっても正確に情報を伝送できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📏 高精度</h4>
+                        <p>16ビット、32ビットなど高い分解能で測定値を表現できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 診断機能</h4>
+                        <p>機器の状態や異常情報も同時に送信できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚙️ 双方向通信</h4>
+                        <p>設定変更やキャリブレーションを遠隔で実行できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>💰 配線コスト削減</h4>
+                        <p>1本のケーブルで複数の機器を接続できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 豊富な情報</h4>
+                        <p>測定値以外にも単位、レンジ、タグ名などを送信できます。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>3. 主要な通信プロトコル</h2>
+
+                <div class="protocol-card">
+                    <h4>HART（Highway Addressable Remote Transducer）</h4>
+                    <p>
+                        4-20mAのアナログ信号に<strong>デジタル信号を重畳</strong>させる方式。
+                        既存のアナログシステムとの互換性が高い。
+                    </p>
+                    <div class="example-box">
+                        <div class="example-title">使用例：圧力伝送器</div>
+                        <p>
+                            • アナログ信号：圧力値（4-20mA）<br>
+                            • デジタル信号：機器タグ名、単位、診断情報、キャリブレーション日時
+                        </p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <h4>FOUNDATION Fieldbus</h4>
+                    <p>
+                        完全デジタル通信で、<strong>1本のケーブルに最大32台</strong>の機器を接続可能。
+                        機器間での直接通信もサポート。
+                    </p>
+                    <div class="example-box">
+                        <div class="example-title">使用例：化学プラントの反応槽制御</div>
+                        <p>
+                            • 温度計、圧力計、流量計、調節弁を1本のケーブルで接続<br>
+                            • 各機器が相互に通信して自律的に制御
+                        </p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <h4>PROFIBUS</h4>
+                    <p>
+                        ヨーロッパで広く使用される産業用ネットワーク。
+                        <strong>高速通信（最大12Mbps）</strong>が可能。
+                    </p>
+                    <div class="example-box">
+                        <div class="example-title">使用例：自動車製造ライン</div>
+                        <p>
+                            • ロボット、センサー、アクチュエータを統合制御<br>
+                            • リアルタイムでの位置制御と品質データ収集
+                        </p>
+                    </div>
+                </div>
+
+                <div class="protocol-card">
+                    <h4>Modbus</h4>
+                    <p>
+                        シンプルで実装が容易な通信プロトコル。
+                        <strong>RTU（シリアル）とTCP（Ethernet）</strong>の2種類がある。
+                    </p>
+                    <div class="example-box">
+                        <div class="example-title">使用例：ビル管理システム</div>
+                        <p>
+                            • 空調機器、照明、電力メーターを統合管理<br>
+                            • 中央監視室から全設備の状態監視と制御
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>4. 実際の使用例</h2>
+
+                <h3>🏭 石油精製プラント</h3>
+                <div class="signal-format">
+                    <h4>システム構成</h4>
+                    <p>
+                        <strong>使用プロトコル：</strong>FOUNDATION Fieldbus<br>
+                        <strong>接続機器：</strong>温度計×8台、圧力計×6台、流量計×4台、調節弁×6台<br>
+                        <strong>メリット：</strong><br>
+                        • 配線コストを従来の1/5に削減<br>
+                        • 機器診断により予防保全を実現<br>
+                        • 遠隔からのパラメータ変更で作業効率向上
+                    </p>
+                </div>
+
+                <h3>💧 浄水場</h3>
+                <div class="signal-format">
+                    <h4>システム構成</h4>
+                    <p>
+                        <strong>使用プロトコル：</strong>HART + Modbus TCP<br>
+                        <strong>接続機器：</strong>水質センサー、流量計、ポンプ制御装置<br>
+                        <strong>メリット：</strong><br>
+                        • 既存の4-20mA配線を活用しながらデジタル化<br>
+                        • 水質データの詳細な記録と分析<br>
+                        • 異常時の迅速な原因特定
+                    </p>
+                </div>
+
+                <h3>🏢 スマートビルディング</h3>
+                <div class="signal-format">
+                    <h4>システム構成</h4>
+                    <p>
+                        <strong>使用プロトコル：</strong>BACnet/IP、Modbus TCP<br>
+                        <strong>接続機器：</strong>温湿度センサー、CO2センサー、照明制御、空調制御<br>
+                        <strong>メリット：</strong><br>
+                        • エネルギー使用量の最適化（20%削減）<br>
+                        • 快適性と省エネの両立<br>
+                        • スマートフォンからの遠隔監視・制御
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>5. デジタル信号のメリット・デメリット</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h3 style="color: #4caf50;">✅ メリット</h3>
+                        <ul class="advantage-list">
+                            <li>ノイズに強く、長距離伝送が可能</li>
+                            <li>複数の情報を同時に送信できる</li>
+                            <li>機器の自己診断機能が使える</li>
+                            <li>配線コストを削減できる</li>
+                            <li>遠隔での設定変更が可能</li>
+                            <li>データの記録・分析が容易</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #f44336;">❌ デメリット</h3>
+                        <ul class="disadvantage-list">
+                            <li>初期投資コストが高い</li>
+                            <li>専門知識が必要</li>
+                            <li>既存システムとの互換性問題</li>
+                            <li>電源供給の制約がある</li>
+                            <li>応答速度がアナログより遅い場合がある</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tips-box">
+                <h3>💡 実務で役立つポイント</h3>
+                <ul>
+                    <li>📌 <strong>段階的な導入：</strong>すべてを一度にデジタル化せず、重要な部分から順次移行</li>
+                    <li>📌 <strong>HARTの活用：</strong>既存の4-20mA配線を活かしながらデジタル化を進められる</li>
+                    <li>📌 <strong>トレーニング：</strong>デジタル通信の基礎知識を身につけることで、トラブル対応力が向上</li>
+                    <li>📌 <strong>標準化：</strong>社内で使用するプロトコルを統一することで、保守性が向上</li>
+                    <li>📌 <strong>バックアップ：</strong>重要な制御にはアナログ信号のバックアップを検討</li>
+                </ul>
+            </div>
+
+            <div class="summary-section">
+                <h2>まとめ</h2>
+                <p>
+                    デジタル信号は、現代の計装システムにおいて欠かせない技術となっています。
+                    ノイズ耐性の高さ、豊富な情報量、双方向通信などの特徴により、
+                    プラントの安全性向上、保守効率化、省エネルギー化に大きく貢献しています。
+                </p>
+                <p style="margin-top: 20px;">
+                    <strong>これから計装に携わる皆さんへ：</strong><br>
+                    デジタル信号の基本を理解し、各プロトコルの特徴を把握することで、
+                    より効率的で信頼性の高いシステム構築が可能になります。
+                    実際の現場では、アナログとデジタルを適材適所で使い分けることが重要です。
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 計装信号デジタル化ガイド | 社会人1年生向け教育資料</p>
+        </footer>
+    </div>
+</body>
+</html>

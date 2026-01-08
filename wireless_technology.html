@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT無線技術 教育資料 - 社会人1年目向け</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tech-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideIn 0.6s forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .tech-card:nth-child(1) { animation-delay: 0.1s; }
+        .tech-card:nth-child(2) { animation-delay: 0.2s; }
+        .tech-card:nth-child(3) { animation-delay: 0.3s; }
+        .tech-card:nth-child(4) { animation-delay: 0.4s; }
+        .tech-card:nth-child(5) { animation-delay: 0.5s; }
+        .tech-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .tech-icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tech-title {
+            flex: 1;
+        }
+
+        .tech-name {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .tech-tagline {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .equipment-illustration {
+            width: 100%;
+            height: 180px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .spec-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .spec-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .spec-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .features {
+            margin-bottom: 20px;
+        }
+
+        .features h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .use-cases {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .use-cases h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .use-case-list {
+            list-style: none;
+        }
+
+        .use-case-list li {
+            padding: 5px 0;
+            color: #856404;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .use-case-list li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            font-size: 0.8em;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .pros {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .cons {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .pros h4, .cons h4 {
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .pros h4 {
+            color: #155724;
+        }
+
+        .cons h4 {
+            color: #721c24;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            font-size: 0.9em;
+        }
+
+        .pros li, .cons li {
+            padding: 3px 0;
+        }
+
+        .advice {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .advice strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comparison-table h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .rating {
+            color: #ffa500;
+        }
+
+        .roadmap {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .roadmap h2 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .roadmap-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: scale(1);
+        }
+
+        .step-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .specs {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 IoT無線技術マスターガイド</h1>
+            <p class="subtitle">社会人1年目のための完全理解教材 - 6つの主要技術を徹底解説</p>
+        </header>
+
+        <div class="tech-grid">
+            <!-- Wi-Fi -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <circle cx="50" cy="70" r="5" fill="#667eea"/>
+                        <path d="M30 50 Q50 30 70 50" stroke="#667eea" stroke-width="3" fill="none"/>
+                        <path d="M20 40 Q50 15 80 40" stroke="#667eea" stroke-width="3" fill="none" opacity="0.7"/>
+                        <path d="M10 30 Q50 0 90 30" stroke="#667eea" stroke-width="3" fill="none" opacity="0.4"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">Wi-Fi</div>
+                        <div class="tech-tagline">高速無線通信の定番</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 工場建屋 -->
+                        <rect x="20" y="80" width="260" height="80" fill="#8b9dc3" stroke="#2c3e50" stroke-width="2"/>
+                        <rect x="30" y="90" width="40" height="30" fill="#3498db" opacity="0.8"/>
+                        <rect x="80" y="90" width="40" height="30" fill="#3498db" opacity="0.8"/>
+                        <rect x="130" y="90" width="40" height="30" fill="#3498db" opacity="0.8"/>
+                        <rect x="180" y="90" width="40" height="30" fill="#3498db" opacity="0.8"/>
+                        <rect x="230" y="90" width="40" height="30" fill="#3498db" opacity="0.8"/>
+
+                        <!-- 製造ライン -->
+                        <rect x="40" y="130" width="220" height="25" fill="#34495e"/>
+                        <circle cx="60" cy="142" r="8" fill="#e74c3c"/>
+                        <circle cx="100" cy="142" r="8" fill="#e74c3c"/>
+                        <circle cx="140" cy="142" r="8" fill="#e74c3c"/>
+                        <circle cx="180" cy="142" r="8" fill="#e74c3c"/>
+                        <circle cx="220" cy="142" r="8" fill="#e74c3c"/>
+
+                        <!-- Wi-Fiアクセスポイント -->
+                        <rect x="140" y="60" width="20" height="20" fill="#2ecc71" rx="3"/>
+                        <circle cx="150" cy="70" r="2" fill="white"/>
+                        <path d="M140 55 Q150 50 160 55" stroke="#2ecc71" stroke-width="2" fill="none"/>
+                        <path d="M135 50 Q150 43 165 50" stroke="#2ecc71" stroke-width="2" fill="none" opacity="0.7"/>
+
+                        <!-- カメラ -->
+                        <rect x="70" y="65" width="15" height="10" fill="#34495e"/>
+                        <circle cx="77" cy="70" r="4" fill="#2c3e50"/>
+                        <rect x="200" y="65" width="15" height="10" fill="#34495e"/>
+                        <circle cx="207" cy="70" r="4" fill="#2c3e50"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">製造ライン監視システム</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">〜100m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜9.6Gbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">2.4/5GHz</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">消費電力</div>
+                        <div class="spec-value">中〜高</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>高速データ転送が可能（動画もOK）</li>
+                        <li>既存インフラを活用しやすい</li>
+                        <li>多数のデバイスが同時接続可能</li>
+                        <li>セキュリティ機能が充実</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>製造ラインの監視カメラ映像伝送</li>
+                        <li>タブレット端末での作業指示配信</li>
+                        <li>品質検査データのリアルタイム収集</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>高速通信</li>
+                            <li>汎用性が高い</li>
+                            <li>導入が容易</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>消費電力が大きい</li>
+                            <li>干渉を受けやすい</li>
+                            <li>通信距離が短い</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    Wi-Fiは最も身近な無線技術です。まずは自宅や会社のWi-Fi設定を理解することから始めましょう。2.4GHzと5GHzの違いを実際に体験してみると理解が深まります。
+                </div>
+            </div>
+
+            <!-- LoRaWAN -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <rect x="40" y="60" width="20" height="30" fill="#764ba2" rx="2"/>
+                        <circle cx="50" cy="55" r="3" fill="#764ba2"/>
+                        <path d="M50 55 L45 40" stroke="#764ba2" stroke-width="2"/>
+                        <path d="M50 55 L55 40" stroke="#764ba2" stroke-width="2"/>
+                        <circle cx="50" cy="40" r="15" stroke="#764ba2" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">LoRaWAN</div>
+                        <div class="tech-tagline">長距離・省電力通信</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 広大なプラント -->
+                        <rect x="10" y="100" width="80" height="60" fill="#95a5a6" stroke="#2c3e50" stroke-width="2"/>
+                        <rect x="110" y="90" width="80" height="70" fill="#95a5a6" stroke="#2c3e50" stroke-width="2"/>
+                        <rect x="210" y="95" width="80" height="65" fill="#95a5a6" stroke="#2c3e50" stroke-width="2"/>
+
+                        <!-- タンク -->
+                        <ellipse cx="50" cy="100" rx="30" ry="10" fill="#3498db"/>
+                        <rect x="20" y="70" width="60" height="30" fill="#3498db"/>
+                        <ellipse cx="50" cy="70" rx="30" ry="10" fill="#5dade2"/>
+
+                        <!-- パイプライン -->
+                        <rect x="80" y="85" width="130" height="8" fill="#34495e"/>
+                        <rect x="190" y="85" width="8" height="30" fill="#34495e"/>
+
+                        <!-- センサー -->
+                        <circle cx="50" cy="85" r="5" fill="#e74c3c"/>
+                        <circle cx="150" cy="89" r="5" fill="#e74c3c"/>
+                        <circle cx="250" cy="110" r="5" fill="#e74c3c"/>
+
+                        <!-- ゲートウェイ -->
+                        <rect x="145" y="40" width="10" height="30" fill="#2ecc71"/>
+                        <path d="M135 35 Q150 25 165 35" stroke="#2ecc71" stroke-width="2" fill="none"/>
+                        <path d="M125 30 Q150 15 175 30" stroke="#2ecc71" stroke-width="2" fill="none" opacity="0.6"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">広域プラント監視システム</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">〜15km</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜50kbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">920MHz帯</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">消費電力</div>
+                        <div class="spec-value">極小</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>電池で数年間動作可能</li>
+                        <li>建物を貫通する優れた電波特性</li>
+                        <li>ライセンス不要の周波数帯</li>
+                        <li>低コストで大規模展開可能</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>広大なプラントの環境モニタリング</li>
+                        <li>農業用センサーネットワーク</li>
+                        <li>スマートメーターの遠隔検針</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>超長距離通信</li>
+                            <li>電池寿命が長い</li>
+                            <li>導入コスト低</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>通信速度が遅い</li>
+                            <li>リアルタイム性低</li>
+                            <li>大容量データ不可</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    LoRaWANは「遠くまで届く省エネ通信」と覚えましょう。センサーデータのような小さなデータを定期的に送るのに最適です。The Things Networkで実験してみると理解が深まります。
+                </div>
+            </div>
+
+            <!-- 5G/ローカル5G -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <text x="50" y="60" text-anchor="middle" font-size="40" font-weight="bold" fill="#e74c3c">5G</text>
+                        <circle cx="50" cy="50" r="35" stroke="#e74c3c" stroke-width="3" fill="none"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">5G/ローカル5G</div>
+                        <div class="tech-tagline">超高速・超低遅延</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 工場フロア -->
+                        <rect x="10" y="120" width="280" height="40" fill="#bdc3c7"/>
+
+                        <!-- AGV（自動搬送車） -->
+                        <rect x="40" y="100" width="40" height="20" fill="#e74c3c" rx="3"/>
+                        <circle cx="50" cy="120" r="5" fill="#2c3e50"/>
+                        <circle cx="70" cy="120" r="5" fill="#2c3e50"/>
+                        <rect x="45" y="95" width="30" height="5" fill="#34495e"/>
+
+                        <!-- ロボットアーム -->
+                        <rect x="140" y="80" width="8" height="40" fill="#34495e"/>
+                        <rect x="144" y="75" width="15" height="8" fill="#34495e" transform="rotate(-30 151 79)"/>
+                        <rect x="155" y="65" width="12" height="6" fill="#34495e" transform="rotate(-45 161 68)"/>
+                        <circle cx="144" cy="80" r="4" fill="#2c3e50"/>
+                        <circle cx="159" cy="72" r="3" fill="#2c3e50"/>
+
+                        <!-- 協働ロボット -->
+                        <rect x="220" y="90" width="25" height="30" fill="#3498db" rx="5"/>
+                        <circle cx="232" cy="100" r="3" fill="white"/>
+                        <rect x="225" y="85" width="15" height="5" fill="#2980b9"/>
+                        <rect x="215" y="120" width="8" height="15" fill="#34495e"/>
+                        <rect x="242" y="120" width="8" height="15" fill="#34495e"/>
+
+                        <!-- 5G基地局 -->
+                        <rect x="145" y="20" width="10" height="40" fill="#e74c3c"/>
+                        <path d="M140 15 L150 5 L160 15" stroke="#e74c3c" stroke-width="3" fill="none"/>
+                        <circle cx="150" cy="30" r="15" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="3,3" opacity="0.5"/>
+
+                        <!-- 作業員 -->
+                        <circle cx="180" cy="85" r="8" fill="#f39c12"/>
+                        <rect x="175" y="93" width="10" height="20" fill="#3498db"/>
+                        <rect x="172" y="113" width="4" height="12" fill="#2c3e50"/>
+                        <rect x="184" y="113" width="4" height="12" fill="#2c3e50"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">スマートファクトリー</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">〜1km</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜20Gbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">28GHz等</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">遅延</div>
+                        <div class="spec-value">1ms以下</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>超低遅延でリアルタイム制御</li>
+                        <li>大容量データの高速伝送</li>
+                        <li>多数同時接続（100万台/km²）</li>
+                        <li>ネットワークスライシング対応</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>AGV・AMRの遠隔制御</li>
+                        <li>AR/VRを使った遠隔作業支援</li>
+                        <li>AIカメラによる品質検査</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>超高速・低遅延</li>
+                            <li>大容量伝送</li>
+                            <li>高信頼性</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>導入コスト高</li>
+                            <li>カバー範囲狭い</li>
+                            <li>消費電力大</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    5Gは「第5世代」の意味です。4Gとの違いは速度だけでなく、遅延の少なさと同時接続数の多さがポイント。ローカル5Gは企業が独自に構築できる5Gネットワークです。
+                </div>
+            </div>
+
+            <!-- Bluetooth LE -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <path d="M40 30 L60 50 L50 60 L50 20 L60 30 L40 50" stroke="#3498db" stroke-width="3" fill="none"/>
+                        <path d="M50 60 L50 80" stroke="#3498db" stroke-width="3"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">Bluetooth LE</div>
+                        <div class="tech-tagline">近距離省電力通信</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 作業現場 -->
+                        <rect x="10" y="130" width="280" height="30" fill="#95a5a6"/>
+
+                        <!-- 作業員1 -->
+                        <circle cx="60" cy="90" r="8" fill="#f39c12"/>
+                        <rect x="55" y="98" width="10" height="20" fill="#e67e22"/>
+                        <rect x="52" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <rect x="64" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <!-- ヘルメット -->
+                        <path d="M52 85 Q60 80 68 85" stroke="#e74c3c" stroke-width="3" fill="#e74c3c"/>
+                        <!-- ビーコン -->
+                        <rect x="58" y="85" width="4" height="4" fill="#3498db"/>
+
+                        <!-- 作業員2 -->
+                        <circle cx="150" cy="90" r="8" fill="#f39c12"/>
+                        <rect x="145" y="98" width="10" height="20" fill="#e67e22"/>
+                        <rect x="142" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <rect x="154" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <path d="M142 85 Q150 80 158 85" stroke="#e74c3c" stroke-width="3" fill="#e74c3c"/>
+                        <rect x="148" y="85" width="4" height="4" fill="#3498db"/>
+
+                        <!-- 作業員3 -->
+                        <circle cx="240" cy="90" r="8" fill="#f39c12"/>
+                        <rect x="235" y="98" width="10" height="20" fill="#e67e22"/>
+                        <rect x="232" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <rect x="244" y="118" width="4" height="12" fill="#2c3e50"/>
+                        <path d="M232 85 Q240 80 248 85" stroke="#e74c3c" stroke-width="3" fill="#e74c3c"/>
+                        <rect x="238" y="85" width="4" height="4" fill="#3498db"/>
+
+                        <!-- ゲートウェイ -->
+                        <rect x="145" y="40" width="10" height="10" fill="#2ecc71" rx="2"/>
+                        <circle cx="60" cy="45" r="12" stroke="#3498db" stroke-width="1" fill="none" opacity="0.3"/>
+                        <circle cx="150" cy="45" r="12" stroke="#3498db" stroke-width="1" fill="none" opacity="0.3"/>
+                        <circle cx="240" cy="45" r="12" stroke="#3498db" stroke-width="1" fill="none" opacity="0.3"/>
+
+                        <!-- スマートウォッチ -->
+                        <rect x="56" y="105" width="8" height="10" fill="#34495e" rx="1"/>
+                        <rect x="146" y="105" width="8" height="10" fill="#34495e" rx="1"/>
+                        <rect x="236" y="105" width="8" height="10" fill="#34495e" rx="1"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">作業員安全管理システム</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">〜100m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜2Mbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">2.4GHz</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">消費電力</div>
+                        <div class="spec-value">極小</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>ボタン電池で数年動作</li>
+                        <li>スマートフォンと直接通信</li>
+                        <li>ビーコン機能で位置検知</li>
+                        <li>小型・軽量なデバイス</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>作業員の位置情報・動線管理</li>
+                        <li>ウェアラブルデバイスでの健康管理</li>
+                        <li>工具・資材の所在管理</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>超省電力</li>
+                            <li>小型化可能</li>
+                            <li>スマホ連携容易</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>通信距離短い</li>
+                            <li>障害物に弱い</li>
+                            <li>干渉受けやすい</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    Bluetooth LEの「LE」は「Low Energy」の略です。スマートウォッチやワイヤレスイヤホンで使われている技術と同じです。まずは身の回りのBLE機器を探してみましょう。
+                </div>
+            </div>
+
+            <!-- Zigbee -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <polygon points="50,20 30,40 50,50 30,70 50,80 70,60 50,50 70,30" stroke="#f39c12" stroke-width="3" fill="none"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">Zigbee</div>
+                        <div class="tech-tagline">メッシュネットワーク</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 工場天井 -->
+                        <line x1="10" y1="40" x2="290" y2="40" stroke="#7f8c8d" stroke-width="2"/>
+
+                        <!-- 照明器具（メッシュネットワーク） -->
+                        <circle cx="50" cy="40" r="15" fill="#f1c40f"/>
+                        <line x1="50" y1="25" x2="50" y2="40" stroke="#34495e" stroke-width="2"/>
+
+                        <circle cx="100" cy="40" r="15" fill="#f1c40f"/>
+                        <line x1="100" y1="25" x2="100" y2="40" stroke="#34495e" stroke-width="2"/>
+
+                        <circle cx="150" cy="40" r="15" fill="#f1c40f"/>
+                        <line x1="150" y1="25" x2="150" y2="40" stroke="#34495e" stroke-width="2"/>
+
+                        <circle cx="200" cy="40" r="15" fill="#f1c40f"/>
+                        <line x1="200" y1="25" x2="200" y2="40" stroke="#34495e" stroke-width="2"/>
+
+                        <circle cx="250" cy="40" r="15" fill="#f1c40f"/>
+                        <line x1="250" y1="25" x2="250" y2="40" stroke="#34495e" stroke-width="2"/>
+
+                        <!-- メッシュ接続線 -->
+                        <line x1="50" y1="40" x2="100" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+                        <line x1="100" y1="40" x2="150" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+                        <line x1="150" y1="40" x2="200" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+                        <line x1="200" y1="40" x2="250" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+                        <line x1="50" y1="40" x2="150" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+                        <line x1="100" y1="40" x2="200" y2="40" stroke="#e67e22" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+
+                        <!-- 作業エリア -->
+                        <rect x="30" y="100" width="240" height="60" fill="#ecf0f1" stroke="#95a5a6" stroke-width="2"/>
+
+                        <!-- センサー -->
+                        <rect x="70" y="110" width="10" height="10" fill="#e74c3c"/>
+                        <rect x="145" y="110" width="10" height="10" fill="#e74c3c"/>
+                        <rect x="220" y="110" width="10" height="10" fill="#e74c3c"/>
+
+                        <!-- コントローラー -->
+                        <rect x="140" y="70" width="20" height="15" fill="#2ecc71" rx="2"/>
+                        <circle cx="145" cy="77" r="2" fill="white"/>
+                        <circle cx="155" cy="77" r="2" fill="white"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">スマート照明制御システム</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">10〜100m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜250kbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">2.4GHz</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">消費電力</div>
+                        <div class="spec-value">低</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>自己修復型メッシュネットワーク</li>
+                        <li>最大65,000台のデバイス接続</li>
+                        <li>標準化された通信プロトコル</li>
+                        <li>セキュアな暗号化通信</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>工場内の照明・空調制御</li>
+                        <li>スマートビルディング管理</li>
+                        <li>産業用センサーネットワーク</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>自己修復機能</li>
+                            <li>大規模接続</li>
+                            <li>相互運用性高</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>初期設定複雑</li>
+                            <li>通信速度遅い</li>
+                            <li>2.4GHz帯混雑</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    Zigbeeは「ジグザグに進むミツバチ」が名前の由来です。メッシュネットワークは、一つの経路が切れても別ルートで通信できる賢い仕組み。スマートホーム機器で体験してみましょう。
+                </div>
+            </div>
+
+            <!-- NB-IoT -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <svg class="tech-icon" viewBox="0 0 100 100">
+                        <rect x="35" y="30" width="30" height="50" fill="#9b59b6" rx="5"/>
+                        <rect x="40" y="35" width="20" height="30" fill="#ecf0f1"/>
+                        <circle cx="50" cy="72" r="3" fill="#34495e"/>
+                        <path d="M45 25 L50 20 L55 25" stroke="#9b59b6" stroke-width="2" fill="none"/>
+                    </svg>
+                    <div class="tech-title">
+                        <div class="tech-name">NB-IoT</div>
+                        <div class="tech-tagline">携帯網活用IoT</div>
+                    </div>
+                </div>
+
+                <div class="equipment-illustration">
+                    <svg viewBox="0 0 300 180" style="width: 100%; height: 100%;">
+                        <!-- 都市インフラ -->
+                        <!-- 道路 -->
+                        <rect x="0" y="140" width="300" height="40" fill="#7f8c8d"/>
+                        <rect x="0" y="158" width="300" height="4" fill="#f1c40f"/>
+
+                        <!-- ガスメーター -->
+                        <rect x="40" y="110" width="30" height="30" fill="#3498db" rx="3"/>
+                        <circle cx="55" cy="125" r="8" fill="white"/>
+                        <text x="55" y="128" text-anchor="middle" font-size="8" fill="#2c3e50">GAS</text>
+                        <rect x="52" y="105" width="6" height="5" fill="#e74c3c"/>
+
+                        <!-- 水道メーター -->
+                        <rect x="120" y="110" width="30" height="30" fill="#3498db" rx="3"/>
+                        <circle cx="135" cy="125" r="8" fill="white"/>
+                        <text x="135" y="128" text-anchor="middle" font-size="8" fill="#2c3e50">H2O</text>
+                        <rect x="132" y="105" width="6" height="5" fill="#e74c3c"/>
+
+                        <!-- 電力メーター -->
+                        <rect x="200" y="110" width="30" height="30" fill="#3498db" rx="3"/>
+                        <circle cx="215" cy="125" r="8" fill="white"/>
+                        <text x="215" y="128" text-anchor="middle" font-size="8" fill="#2c3e50">kWh</text>
+                        <rect x="212" y="105" width="6" height="5" fill="#e74c3c"/>
+
+                        <!-- 携帯基地局 -->
+                        <rect x="145" y="40" width="10" height="50" fill="#95a5a6"/>
+                        <path d="M135 35 L150 20 L165 35" stroke="#e74c3c" stroke-width="3" fill="none"/>
+                        <path d="M140 30 L150 22 L160 30" stroke="#e74c3c" stroke-width="2" fill="none"/>
+
+                        <!-- 電波 -->
+                        <circle cx="150" cy="50" r="20" stroke="#9b59b6" stroke-width="1" fill="none" opacity="0.3"/>
+                        <circle cx="150" cy="50" r="35" stroke="#9b59b6" stroke-width="1" fill="none" opacity="0.2"/>
+                        <circle cx="150" cy="50" r="50" stroke="#9b59b6" stroke-width="1" fill="none" opacity="0.1"/>
+
+                        <!-- 建物 -->
+                        <rect x="250" y="80" width="40" height="60" fill="#95a5a6"/>
+                        <rect x="255" y="90" width="10" height="10" fill="#3498db" opacity="0.8"/>
+                        <rect x="270" y="90" width="10" height="10" fill="#3498db" opacity="0.8"/>
+                        <rect x="255" y="105" width="10" height="10" fill="#3498db" opacity="0.8"/>
+                        <rect x="270" y="105" width="10" height="10" fill="#3498db" opacity="0.8"/>
+
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#2c3e50">スマートメーター遠隔監視</text>
+                    </svg>
+                </div>
+
+                <div class="specs">
+                    <div class="spec-item">
+                        <div class="spec-label">通信距離</div>
+                        <div class="spec-value">〜10km</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">通信速度</div>
+                        <div class="spec-value">〜250kbps</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">周波数帯</div>
+                        <div class="spec-value">LTEバンド</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">消費電力</div>
+                        <div class="spec-value">低</div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <h3>📌 主な特徴</h3>
+                    <ul class="feature-list">
+                        <li>既存の携帯電話網を活用</li>
+                        <li>広域カバレッジ（全国対応）</li>
+                        <li>地下や建物内でも通信可能</li>
+                        <li>SIMカードで簡単接続</li>
+                    </ul>
+                </div>
+
+                <div class="use-cases">
+                    <h3>🏭 活用事例</h3>
+                    <ul class="use-case-list">
+                        <li>スマートメーター（電気・ガス・水道）</li>
+                        <li>自動販売機の在庫管理</li>
+                        <li>駐車場の満空情報管理</li>
+                    </ul>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>👍 メリット</h4>
+                        <ul>
+                            <li>全国カバー</li>
+                            <li>屋内浸透性高</li>
+                            <li>インフラ不要</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>⚠️ 注意点</h4>
+                        <ul>
+                            <li>通信費用発生</li>
+                            <li>キャリア依存</li>
+                            <li>遅延あり</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="advice">
+                    <strong>💡 新人へのアドバイス</strong>
+                    NB-IoTの「NB」は「Narrow Band（狭帯域）」の略です。携帯電話の電波を使うので、新たにインフラを作る必要がありません。月額数十円から使える格安SIMもあります。
+                </div>
+            </div>
+        </div>
+
+        <!-- 比較表 -->
+        <div class="comparison-table">
+            <h2>📊 技術比較表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>技術</th>
+                        <th>通信距離</th>
+                        <th>通信速度</th>
+                        <th>消費電力</th>
+                        <th>導入コスト</th>
+                        <th>適用分野</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Wi-Fi</strong></td>
+                        <td>〜100m</td>
+                        <td class="rating">★★★★★</td>
+                        <td class="rating">★★☆☆☆</td>
+                        <td class="rating">★★★★☆</td>
+                        <td>映像伝送・高速データ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LoRaWAN</strong></td>
+                        <td>〜15km</td>
+                        <td class="rating">★☆☆☆☆</td>
+                        <td class="rating">★★★★★</td>
+                        <td class="rating">★★★★★</td>
+                        <td>広域センサー監視</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5G/ローカル5G</strong></td>
+                        <td>〜1km</td>
+                        <td class="rating">★★★★★</td>
+                        <td class="rating">★☆☆☆☆</td>
+                        <td class="rating">★☆☆☆☆</td>
+                        <td>リアルタイム制御</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bluetooth LE</strong></td>
+                        <td>〜100m</td>
+                        <td class="rating">★★☆☆☆</td>
+                        <td class="rating">★★★★★</td>
+                        <td class="rating">★★★★★</td>
+                        <td>ウェアラブル・位置情報</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zigbee</strong></td>
+                        <td>10〜100m</td>
+                        <td class="rating">★★☆☆☆</td>
+                        <td class="rating">★★★★☆</td>
+                        <td class="rating">★★★☆☆</td>
+                        <td>設備制御・メッシュ網</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NB-IoT</strong></td>
+                        <td>〜10km</td>
+                        <td class="rating">★★☆☆☆</td>
+                        <td class="rating">★★★★☆</td>
+                        <td class="rating">★★★☆☆</td>
+                        <td>インフラ監視</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 学習ロードマップ -->
+        <div class="roadmap">
+            <h2>🎯 学習ロードマップ</h2>
+            <div class="roadmap-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">基礎理解</div>
+                    <div class="step-description">
+                        各技術の特徴と用語を覚える。身近な機器で体験する。
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">実践体験</div>
+                    <div class="step-description">
+                        開発キットやシミュレータで実際に通信を試してみる。
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">応用設計</div>
+                    <div class="step-description">
+                        用途に応じた技術選定ができるようになる。
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">システム構築</div>
+                    <div class="step-description">
+                        複数技術を組み合わせた最適なシステムを設計する。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
